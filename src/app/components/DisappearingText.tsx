@@ -7,7 +7,6 @@ const DisappearingText = ({children}: {children: React.ReactNode}) => {
     
         const handleScroll = () => {
           setScrollY(window.scrollY);
-          console.log(window.scrollY)
         };
       
         useEffect(() => {
