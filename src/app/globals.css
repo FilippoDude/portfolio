@@ -8,14 +8,15 @@
     transform: scale(1);
   }
 }
-
 @theme inline {
   --animate-splash: splashText ease-in-out 0.5s infinite alternate;
   
   --color-background: #F5F0F6;
   --color-background2: #22AED1;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-manrope-sans);
   --font-mono: var(--font-geist-mono);
+  --font-raleway-sans: var(--font-raleway-sans);
+  
 }
 
 @media (prefers-color-scheme: dark){}
