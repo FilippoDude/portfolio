@@ -72,8 +72,23 @@ export default function Home() {
       <section className="relative min-h-180 w-full h-screen overflow-hidden bg-[#0F101B] flex flex-col items-center justify-center ">
       
         <div className="w-full flex flex-col items-center">
-        <h1 className="font-raleway-sans text-6xl font-black text-white">PAST EXPERIENCES</h1>
-        <ScrollingCarousel></ScrollingCarousel>
+          <h1 className="font-raleway-sans text-6xl font-black text-white">PAST EXPERIENCES</h1>
+          <ScrollingCarousel></ScrollingCarousel>
+        </div>
+      </section>
+
+      <section className="relative min-h-180 w-full h-screen overflow-hidden bg-[#17192A] flex flex-row items-center justify-center gap-120">
+        <div className="flex flex-col w-200">
+          <h1 className="font-raleway-sans text-6xl font-black text-white">About me</h1>
+          <p className="text-xl mt-2 opacity-80 font-sans text-white">Hi, I'm a developer based in Italy that focuses mainly on web and app development. I also like to try out new stuff that are not related to these two like making scrapers or Telegram bots or cool stuff that come to my mind. <br/><br/>I've worked with many clients in the past, both from Fiverr and privately, on web and Telegram bot projects<br/><br/>Outside of development I also like going to the gym, gaming, or just studying stuff i find interesting.</p>
+        </div>
+        <div></div>
+      </section>
+
+      <section className="relative min-h-180 w-full h-screen overflow-hidden bg-[#1C2032] flex flex-col items-center justify-center">
+
+        <div className=" flex flex-col items-center bg-[#2E3754] w-10/12 h-160 rounded-2xl p-10">
+          <h1 className="font-raleway-sans text-6xl font-black text-white">Contacts</h1>
         </div>
       </section>
     </div>
