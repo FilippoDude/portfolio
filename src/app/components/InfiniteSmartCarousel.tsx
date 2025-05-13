@@ -1,16 +1,24 @@
 
 "use client"
 import { JSX, Ref, Reference, useEffect, useRef, useState } from "react";
+import Markdown from "react-markdown";
 
 interface item {
-    text: string
+    title: string,
+    date: string,
+    description: string,
+    backgroundImage: string
 }
 const items: item[] = [
-    {text: "1"}, {text: "2"}, {text: "3"}, {text: "4"}, {text: "5"}
+    {title: "CYBERCHALLENGE", date: "2024", description: "From Olicyber to Cyberchallenge!\nManaged to get second position in the local competition and got to the national competition in the team of Messina ", backgroundImage: "./"},
+    {title: "2",date: "2024", description: "test", backgroundImage: "./"},
+    {title: "3",date: "2024", description: "test", backgroundImage: "./"},
+    {title: "4",date: "2024", description: "test", backgroundImage: "./"},
+    {title: "5",date: "2024", description: "test", backgroundImage: "./"}
 ];
 
 const ScrollingCarousel = () => {
-    const itemLength = 400
+    const itemLength = 450
     const expandedItemLength = 1000
 
     const containerElement = useRef<HTMLDivElement>(null);
@@ -186,8 +194,12 @@ const ScrollingCarousel = () => {
     return (
         <div ref={containerElement} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center">
             {items.map((x, i) => {
-                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"absolute top-0 left-0 rounded-xl h-140 bg-[#2E3754] transition-all duration-300"} style={{minWidth: itemLength}} >
-                    <p className="text-white text-6xl" >{x.text}</p>
+                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength}} >
+                    <div className="relative w-full h-full p-10 overflow-hidden">
+                        <p className="text-white font-raleway-sans font-black text-6xl overflow-hidden h-fit" >{x.title}</p>
+                        <p className="text-white font-sans font-black text-xl overflow-hidden h-fit opacity-80 italic" style={{whiteSpace: 'pre-line'}}>{x.date}</p>
+                        <div className="text-white font-sans text-xl overflow-hidden h-fit opacity-60" style={{whiteSpace: 'pre-line'}}><Markdown >{x.description}</Markdown></div>
+                    </div>
                 </div>
             })
             }

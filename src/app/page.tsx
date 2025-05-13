@@ -1,6 +1,6 @@
 import Image from "next/image";
 import DisappearingText from "./components/DisappearingText";
-import ScrollingCarousel from "./components/ScrollingCarousel";
+import ScrollingCarousel from "./components/InfiniteSmartCarousel";
 
 
 export default function Home() {
@@ -72,7 +72,7 @@ export default function Home() {
       <section className="relative min-h-180 w-full h-screen overflow-hidden bg-[#0F101B] flex flex-col items-center justify-center ">
       
         <div className="w-full flex flex-col items-center">
-          <h1 className="font-raleway-sans text-6xl font-black text-white">PAST EXPERIENCES</h1>
+          <h1 className="font-raleway-sans text-6xl font-black text-white opacity-80">PAST EXPERIENCES</h1>
           <ScrollingCarousel></ScrollingCarousel>
         </div>
       </section>
