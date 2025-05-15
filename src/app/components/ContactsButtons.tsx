@@ -9,6 +9,9 @@ const ContactsButtons = () => {
             <button className=" relative w-16 h-16 cursor-pointer">
             <Image onClick={() => window.location.href = 'https://www.fiverr.com/s/99oGmGa'} fill={true} className="" alt="fiverr" src={"fiverr.svg"}></Image>
             </button>
+            <button className=" relative w-16 h-16 cursor-pointer">
+            <Image onClick={() => window.location.href = 'https://github.com/FilippoDude'} fill={true} className="" alt="fiverr" src={"github.svg"}></Image>
+            </button>
         </div>
     );
 }

@@ -1,6 +1,6 @@
 
 "use client"
-import { JSX, Ref, Reference, useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import Markdown from "react-markdown";
 
 interface item {
@@ -10,11 +10,11 @@ interface item {
     backgroundImage: string
 }
 const items: item[] = [
-    {title: "CYBERCHALLENGE", date: "2024", description: "From Olicyber to Cyberchallenge!\nManaged to get second position in the local competition and got to the national competition in the team of Messina ", backgroundImage: "./"},
-    {title: "2",date: "2024", description: "test", backgroundImage: "./"},
-    {title: "3",date: "2024", description: "test", backgroundImage: "./"},
-    {title: "4",date: "2024", description: "test", backgroundImage: "./"},
-    {title: "5",date: "2024", description: "test", backgroundImage: "./"}
+    {title: "CYBERCHALLENGE", date: "2024", description: "From Olicyber to Cyberchallenge!\nManaged to get **second place** in the local competition and got to the **national CTF competition as part of the team of Messina**", backgroundImage: "./"},
+    {title: "TRINITY",date: "2024", description: "Got the B2.1 certification!", backgroundImage: "./"},
+    {title: "ERASMUS",date: "2023/2024", description: "Went to spain for a week!", backgroundImage: "./"},
+    {title: "OliCYBER",date: "2023/2024", description: "A logic and programming competition. Tried it but didn't go far...", backgroundImage: "./"},
+    {title: "ROTARY",date: "2023", description: "Went to a presentation about Artificial intelligence made by Rotary.", backgroundImage: "./"}
 ];
 
 const ScrollingCarousel = () => {
@@ -23,11 +23,11 @@ const ScrollingCarousel = () => {
 
     const containerElement = useRef<HTMLDivElement>(null);
     const itemsRefs = useRef<HTMLDivElement[]>([])
-    const isHovering = useRef<Boolean>(false)
+    const isHovering = useRef<boolean>(false)
 
     const interval = useRef<NodeJS.Timeout | null>(null)
 
-    const loopRightList = (list: any[]) => {
+    const loopRightList = (list: HTMLDivElement[]) => {
         list.forEach((e, i) => {
             list[list.length-i] = list[list.length-1-i]
         })
@@ -59,8 +59,8 @@ const ScrollingCarousel = () => {
     const swipeItemsRight = () => {
         if(containerElement.current && !isHovering.current){
 
-            let visibleElementsNumber = getVisibleElementsNumber(containerElement.current)
-            var jumpWidth: number;
+            const visibleElementsNumber = getVisibleElementsNumber(containerElement.current)
+            let jumpWidth: number;
             if(visibleElementsNumber == 3){
                 jumpWidth = (containerElement.current.offsetWidth-(itemLength * 3))/4+itemLength
             } else if (visibleElementsNumber == 2){
@@ -72,11 +72,11 @@ const ScrollingCarousel = () => {
             loopRightList(itemsRefs.current)
 
             itemsRefs.current.forEach((e, i) => {
-                let left = parseFloat(getComputedStyle(e).left);
+                const left = parseFloat(getComputedStyle(e).left);
 
-                var newLeft;
+                let newLeft;
                 if(i == 0){
-                    let oldStyleTransition = getComputedStyle(e).transitionDuration
+                    const oldStyleTransition = getComputedStyle(e).transitionDuration
                     e.style.transition = "none"
                     newLeft = -itemLength;
                     setTimeout(() => {
@@ -95,14 +95,14 @@ const ScrollingCarousel = () => {
 
     useEffect(() => {
         if(containerElement.current){
-            let oldStyleTransition = getComputedStyle(itemsRefs.current[0]).transitionDuration
-            itemsRefs.current.forEach((e, i) => {
+            const oldStyleTransition = getComputedStyle(itemsRefs.current[0]).transitionDuration
+            itemsRefs.current.forEach((e) => {
                 e.style.transition = "none"
                 setTimeout(() => {
                     swipeItemsRight()
                 }, 0);
             })
-            itemsRefs.current.forEach((e, i) => {
+            itemsRefs.current.forEach((e) => {
                 e.style.transition = oldStyleTransition
             })
         }
@@ -118,8 +118,8 @@ const ScrollingCarousel = () => {
 
     const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
         const element = e.currentTarget;
-        let visibleElementsNumber = getVisibleElementsNumber(element)
-        var centerElementIndex: number;
+        const visibleElementsNumber = getVisibleElementsNumber(element)
+        let centerElementIndex: number;
 
         if(visibleElementsNumber > 1){
             centerElementIndex = 2
@@ -128,13 +128,13 @@ const ScrollingCarousel = () => {
         }
 
         if(centerElementIndex > 1 && element.offsetWidth >= expandedItemLength){
-            let centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
-            let jumpWidth: number = (element.offsetWidth - expandedItemLength)/2
+            const centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
+            const jumpWidth: number = (element.offsetWidth - expandedItemLength)/2
             centerElement.style.width = `${expandedItemLength}px`
             centerElement.style.maxWidth = `${expandedItemLength}px`
             centerElement.style.left = `${jumpWidth}px`
 
-            var adjacentJumpWidth: number = (element.offsetWidth-(itemLength * 3))/4
+            let adjacentJumpWidth: number = (element.offsetWidth-(itemLength * 3))/4
             if(visibleElementsNumber == 3){
                 adjacentJumpWidth = (element.offsetWidth-(itemLength * 3))/4
             } else if (visibleElementsNumber == 2){
@@ -155,8 +155,8 @@ const ScrollingCarousel = () => {
 
     const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
         const element = e.currentTarget;
-        let visibleElementsNumber = getVisibleElementsNumber(element)
-        var centerElementIndex: number;
+        const visibleElementsNumber = getVisibleElementsNumber(element)
+        let centerElementIndex: number;
 
         if(visibleElementsNumber > 1){
             centerElementIndex = 2
@@ -165,8 +165,8 @@ const ScrollingCarousel = () => {
         }
 
         if(centerElementIndex > 1){
-            let centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
-            var jumpWidth: number = (element.offsetWidth-(itemLength * 3))/4+itemLength; // Default value
+            const centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
+            let jumpWidth: number = (element.offsetWidth-(itemLength * 3))/4+itemLength; // Default value
             if(visibleElementsNumber == 3){
                 jumpWidth = (element.offsetWidth-(itemLength * 3))/4+itemLength
             } else if (visibleElementsNumber == 2){
@@ -191,12 +191,17 @@ const ScrollingCarousel = () => {
         }, 0);
 
     };
+    const assignRef = (e: HTMLDivElement | null, i: number) => {
+        if(e){
+            itemsRefs.current[i] = e
+        }
+    }
 
 
     return (
         <div ref={containerElement} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center">
             {items.map((x, i) => {
-                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength, maxWidth: itemLength}} >
+                return <div ref={(el) => assignRef(el, i)} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength, maxWidth: itemLength}} >
                     <div className="relative w-full h-full p-10 overflow-hidden">
                         <p className="text-white font-raleway-sans font-black text-6xl break-all h-fit" >{x.title}</p>
                         <p className="text-white font-sans font-black text-xl overflow-hidden h-fit opacity-80 italic" style={{whiteSpace: 'pre-line'}}>{x.date}</p>

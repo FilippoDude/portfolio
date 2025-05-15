@@ -1,6 +1,6 @@
 
 "use client"
-import { JSX, Ref, Reference, useEffect, useRef, useState } from "react";
+import {useEffect, useRef} from "react";
 
 interface item {
     text: string
@@ -11,13 +11,13 @@ const items: item[] = [
 
 const ScrollingCarousel = () => {
     const itemLength = 400
-    const expandedItemLength = 1000
+    //const expandedItemLength = 1000
 
     const containerElement = useRef<HTMLDivElement>(null);
     const itemsRefs = useRef<HTMLDivElement[]>([])
     const interval = useRef<NodeJS.Timeout | null>(null)
 
-    const loopRightList = (list: any[]) => {
+    const loopRightList = (list: HTMLDivElement[]) => {
         list.forEach((e, i) => {
             list[list.length-i] = list[list.length-1-i]
         })
@@ -49,8 +49,8 @@ const ScrollingCarousel = () => {
     const swipeItemsRight = () => {
         if(containerElement.current){
 
-            let visibleElementsNumber = getVisibleElementsNumber(containerElement.current)
-            var jumpWidth: number;
+            const visibleElementsNumber = getVisibleElementsNumber(containerElement.current)
+            let jumpWidth: number;
             if(visibleElementsNumber == 3){
                 jumpWidth = (containerElement.current.offsetWidth-(itemLength * 3))/4+itemLength
             } else if (visibleElementsNumber == 2){
@@ -62,11 +62,11 @@ const ScrollingCarousel = () => {
             loopRightList(itemsRefs.current)
 
             itemsRefs.current.forEach((e, i) => {
-                let left = parseFloat(getComputedStyle(e).left);
+                const left = parseFloat(getComputedStyle(e).left);
 
-                var newLeft;
+                let newLeft;
                 if(i == 0){
-                    let oldStyleTransition = getComputedStyle(e).transitionDuration
+                    const oldStyleTransition = getComputedStyle(e).transitionDuration
                     e.style.transition = "none"
                     newLeft = -itemLength;
                     setTimeout(() => {
@@ -85,14 +85,14 @@ const ScrollingCarousel = () => {
 
     useEffect(() => {
         if(containerElement.current){
-            let oldStyleTransition = getComputedStyle(itemsRefs.current[0]).transitionDuration
-            itemsRefs.current.forEach((e, i) => {
+            const oldStyleTransition = getComputedStyle(itemsRefs.current[0]).transitionDuration
+            itemsRefs.current.forEach((e) => {
                 e.style.transition = "none"
                 setTimeout(() => {
                     swipeItemsRight()
                 }, 0);
             })
-            itemsRefs.current.forEach((e, i) => {
+            itemsRefs.current.forEach((e) => {
                 e.style.transition = oldStyleTransition
             })
         }
@@ -107,12 +107,17 @@ const ScrollingCarousel = () => {
     }, [])
 
 
+    const assignRef = (e: HTMLDivElement | null, i: number) => {
+        if(e){
+            itemsRefs.current[i] = e
+        }
+    }
 
 
     return (
         <div ref={containerElement} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center">
             {items.map((x, i) => {
-                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"absolute top-0 left-0 rounded-xl h-140 bg-[#2E3754] transition-all duration-300"} style={{minWidth: itemLength}} >
+                return <div ref={(el) => assignRef(el, i)} key={i} className={"absolute top-0 left-0 rounded-xl h-140 bg-[#2E3754] transition-all duration-300"} style={{minWidth: itemLength}} >
                     <p className="text-white text-6xl" >{x.text}</p>
                 </div>
             })
