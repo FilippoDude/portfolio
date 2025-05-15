@@ -18,7 +18,7 @@ const items: item[] = [
 ];
 
 const ScrollingCarousel = () => {
-    const itemLength = 450
+    const itemLength = 375
     const expandedItemLength = 1000
 
     const containerElement = useRef<HTMLDivElement>(null);
@@ -131,6 +131,7 @@ const ScrollingCarousel = () => {
             let centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
             let jumpWidth: number = (element.offsetWidth - expandedItemLength)/2
             centerElement.style.width = `${expandedItemLength}px`
+            centerElement.style.maxWidth = `${expandedItemLength}px`
             centerElement.style.left = `${jumpWidth}px`
 
             var adjacentJumpWidth: number = (element.offsetWidth-(itemLength * 3))/4
@@ -173,6 +174,7 @@ const ScrollingCarousel = () => {
             }
 
             centerElement.style.width = `${itemLength}px`
+            centerElement.style.maxWidth = `${itemLength}px`
             centerElement.style.left = `${jumpWidth * 2 - itemLength}px`
 
             itemsRefs.current[1].style.left = `${jumpWidth - itemLength}px`
@@ -194,9 +196,9 @@ const ScrollingCarousel = () => {
     return (
         <div ref={containerElement} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center">
             {items.map((x, i) => {
-                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength}} >
+                return <div ref={(el) => {el ? (itemsRefs.current[i] = el) : null}} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength, maxWidth: itemLength}} >
                     <div className="relative w-full h-full p-10 overflow-hidden">
-                        <p className="text-white font-raleway-sans font-black text-6xl overflow-hidden h-fit" >{x.title}</p>
+                        <p className="text-white font-raleway-sans font-black text-6xl break-all h-fit" >{x.title}</p>
                         <p className="text-white font-sans font-black text-xl overflow-hidden h-fit opacity-80 italic" style={{whiteSpace: 'pre-line'}}>{x.date}</p>
                         <div className="text-white font-sans text-xl overflow-hidden h-fit opacity-60" style={{whiteSpace: 'pre-line'}}><Markdown >{x.description}</Markdown></div>
                     </div>
