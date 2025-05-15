@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const SkillsSection = () => {
-    const ref = useRef<HTMLDivElement | null>(null);
+const SkillsSection = ({externalRef}: {externalRef: React.Ref<HTMLElement | null>}) => {
+    const ref = useRef<HTMLElement | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
@@ -16,7 +16,16 @@ const SkillsSection = () => {
     }, []);
 
     return(
-        <section ref={ref} className="relative min-h-180 h-fit py-20 xl:py-0 xl:h-screen w-screen overflow-hidden flex justify-center items-center  bg-[#131522] z-10">
+        <section 
+        ref={(el) => {
+            ref.current = el;
+            if (typeof externalRef === 'function') {
+                externalRef(el);
+            } else if (externalRef) {
+                externalRef.current = el;
+            }
+        }}
+        className="relative min-h-180 h-fit py-20 xl:py-0 xl:h-screen w-screen overflow-hidden flex justify-center items-center  bg-[#131522] z-10">
             <h1 className="absolute z-0 text-white opacity-75 font-black font-raleway-sans italic text-[32rem]">SKILLS</h1>
             <div className="relative z-1 w-10/12 h-fit py-20 xl:py-0 xl:h-10/12 bg-[#1c2032d8] rounded-2xl flex flex-wrap items-center justify-center gap-10 border-2 border-gray-500 ">
                 <div className={`relative w-68 h-80 bg-[#425173d0] flex flex-col items-center px-12 flex-shrink-0 duration-750 transition-all ease-in-out ${isVisible ? ' opacity-100' : 'xl:mt-10 opacity-0'}`}>
