@@ -1,6 +1,6 @@
 
 "use client"
-import { useEffect, useRef, useState} from "react";
+import { useEffect, useRef} from "react";
 import Markdown from "react-markdown";
 import Image from "next/image";
 
@@ -232,7 +232,7 @@ const ScrollingCarousel = () => {
         }
     }
 
-    const swipeRightButton = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
+    const swipeRightButton = () => {
         if(containerElement.current){
             stopHover(containerElement.current)
             setTimeout(() => {
@@ -255,7 +255,7 @@ const ScrollingCarousel = () => {
                         <p className="text-white font-sans font-black text-xl overflow-hidden h-fit opacity-80 italic" style={{whiteSpace: 'pre-line'}}>{x.date}</p>
                         <div className="text-white font-sans text-xl overflow-hidden h-fit opacity-60" style={{whiteSpace: 'pre-line'}}><Markdown >{x.description}</Markdown></div>
                     </div>
-                    <button ref={(el) => assignArrowRef(el, i)} onClick={(el) => swipeRightButton(el, i)} className={`z-10 cursor-pointer absolute top-1/2 -translate-y-1/2 transle right-10 h-20 w-20 transition-all duration-300 opacity-0`}>
+                    <button ref={(el) => assignArrowRef(el, i)} onClick={swipeRightButton} className={`z-10 cursor-pointer absolute top-1/2 -translate-y-1/2 transle right-10 h-20 w-20 transition-all duration-300 opacity-0`}>
                         <Image src="/carousel_arrow.png" alt="Navigation Arrow" fill={true}/>
                     </button>
                 </div>

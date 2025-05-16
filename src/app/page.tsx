@@ -13,15 +13,15 @@ export default function Home() {
   return (
     <>      
       <Head>
-        <title>Filippo's Portfolio</title>
-        <meta property="og:title" content="Filippo's Portfolio" />
+        <title>Filippo&apos;s Portfolio</title>
+        <meta property="og:title" content="Filippo&apos;s Portfolio" />
         <meta property="og:description" content="A website containing most of the info about me!" />
         <meta property="og:image" content="https://filippodude.cc/logo.jpg" />
         <meta property="og:url" content="https://filippodude.cc/" />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Filippo's Portfolio" />
-
+        <meta property="og:site_name" content="Filippo&apos;s Portfolio" />
       </Head>
+      
       <div className="min-h-screen max-w-screen overflow-hidden flex flex-col bg-[#0F101B]">
         <MainSection skillsSectionRef={skillsSectionRef} aboutmeRef={aboutmeSectionRef}></MainSection>
         <SkillsSection externalRef={skillsSectionRef}></SkillsSection>
