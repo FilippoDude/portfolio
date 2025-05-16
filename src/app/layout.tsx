@@ -24,7 +24,22 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Filippo's Portfolio",
-  description: "Quick About Me",
+  description: "A website containing most of the info about me!",
+  openGraph: {
+    title: "Filippo's Portfolio",
+    description: "A website containing most of the info about me!",
+    url: "https://filippodude.cc/",
+    siteName: "Filippo's Portfolio",
+    images: [
+      {
+        url: "https://filippodude.cc/logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Filippo's Logo",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
