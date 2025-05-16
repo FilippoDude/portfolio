@@ -1,7 +1,8 @@
 
 "use client"
-import { useEffect, useRef} from "react";
+import { useEffect, useRef, useState} from "react";
 import Markdown from "react-markdown";
+import Image from "next/image";
 
 interface item {
     title: string,
@@ -27,7 +28,10 @@ const ScrollingCarousel = () => {
 
     const interval = useRef<NodeJS.Timeout | null>(null)
 
-    const loopRightList = (list: HTMLDivElement[]) => {
+    const rightArrowRefs = useRef<HTMLButtonElement[]>([]);
+
+
+    const loopRightList = (list: HTMLDivElement[] | HTMLButtonElement[]) => {
         list.forEach((e, i) => {
             list[list.length-i] = list[list.length-1-i]
         })
@@ -70,6 +74,7 @@ const ScrollingCarousel = () => {
             }
 
             loopRightList(itemsRefs.current)
+            loopRightList(rightArrowRefs.current)
 
             itemsRefs.current.forEach((e, i) => {
                 const left = parseFloat(getComputedStyle(e).left);
@@ -105,19 +110,24 @@ const ScrollingCarousel = () => {
             itemsRefs.current.forEach((e) => {
                 e.style.transition = oldStyleTransition
             })
-        }
+            const visibleElementsNumber = getVisibleElementsNumber(containerElement.current)
+            
+            let duration = 2000;
+            if(visibleElementsNumber < 3){
+                duration = 4000
+            } 
+            interval.current = setInterval(() => {
+                swipeItemsRight()
+            }, duration)
 
-        interval.current = setInterval(() => {
-            swipeItemsRight()
-        }, 1000)
+        }
 
         return (() => {
             if(interval.current) clearInterval(interval.current)
         })
     }, [])
 
-    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-        const element = e.currentTarget;
+    const startHover = (element: HTMLDivElement) => {
         const visibleElementsNumber = getVisibleElementsNumber(element)
         let centerElementIndex: number;
 
@@ -134,6 +144,9 @@ const ScrollingCarousel = () => {
             centerElement.style.maxWidth = `${expandedItemLength}px`
             centerElement.style.left = `${jumpWidth}px`
 
+            if(rightArrowRefs.current[centerElementIndex]){
+                rightArrowRefs.current[centerElementIndex].style.opacity = "100"
+            }
             let adjacentJumpWidth: number = (element.offsetWidth-(itemLength * 3))/4
             if(visibleElementsNumber == 3){
                 adjacentJumpWidth = (element.offsetWidth-(itemLength * 3))/4
@@ -142,19 +155,22 @@ const ScrollingCarousel = () => {
             }
             itemsRefs.current[1].style.left = `${jumpWidth - (adjacentJumpWidth + itemLength)}px`
             itemsRefs.current[3].style.left = `${jumpWidth + (adjacentJumpWidth + expandedItemLength)}px`
+            
+            setTimeout(() => {
+                if(interval.current){
+                    clearInterval(interval.current)
+                    interval.current = null
+                }
+                isHovering.current = true;
+            }, 0);
         }
+    }
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+        startHover(e.currentTarget);
         
-        setTimeout(() => {
-            if(interval.current){
-                clearInterval(interval.current)
-                interval.current = null
-            }
-            isHovering.current = true;
-        }, 0);
     };
 
-    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-        const element = e.currentTarget;
+    const stopHover = (element: HTMLDivElement) => {
         const visibleElementsNumber = getVisibleElementsNumber(element)
         let centerElementIndex: number;
 
@@ -163,6 +179,7 @@ const ScrollingCarousel = () => {
         } else {
             centerElementIndex = 1
         }
+
 
         if(centerElementIndex > 1){
             const centerElement: HTMLDivElement = itemsRefs.current[centerElementIndex]
@@ -176,6 +193,10 @@ const ScrollingCarousel = () => {
             centerElement.style.width = `${itemLength}px`
             centerElement.style.maxWidth = `${itemLength}px`
             centerElement.style.left = `${jumpWidth * 2 - itemLength}px`
+            
+            if(rightArrowRefs.current[centerElementIndex]){
+                rightArrowRefs.current[centerElementIndex].style.opacity = "0"
+            }
 
             itemsRefs.current[1].style.left = `${jumpWidth - itemLength}px`
             itemsRefs.current[3].style.left = `${jumpWidth * 3 - itemLength}px`
@@ -183,23 +204,50 @@ const ScrollingCarousel = () => {
 
         setTimeout(() => {
             if(interval.current == null){
+                let duration = 2000;
+                if(visibleElementsNumber < 3){
+                    duration = 3000
+                } 
                 interval.current = setInterval(() => {
                     swipeItemsRight()
-                }, 1000)
+                }, duration)
             }
             isHovering.current = false;
         }, 0);
-
+    }
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        stopHover(e.currentTarget)
     };
+
+    
     const assignRef = (e: HTMLDivElement | null, i: number) => {
         if(e){
             itemsRefs.current[i] = e
         }
     }
 
+    const assignArrowRef = (e: HTMLButtonElement | null, i: number) => {
+        if(e){
+            rightArrowRefs.current[i] = e
+        }
+    }
+
+    const swipeRightButton = (e: React.MouseEvent<HTMLButtonElement>, i: number) => {
+        if(containerElement.current){
+            stopHover(containerElement.current)
+            setTimeout(() => {
+                swipeItemsRight()
+            }, 0);
+            setTimeout(() => {
+                if(containerElement.current){
+                    startHover(containerElement.current)
+                }
+            }, 0);
+        }
+    }
 
     return (
-        <div ref={containerElement} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center">
+        <div ref={containerElement} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="relative w-full flex flex-row gap-10 mt-2 h-140 flex-shrink-0 no-scrollbar justify-center items-center">
             {items.map((x, i) => {
                 return <div ref={(el) => assignRef(el, i)} key={i} className={"border-2 border-gray-500 absolute top-0 left-0 rounded-xl h-140 bg-[#2e37549a] transition-all duration-300"} style={{minWidth: itemLength, maxWidth: itemLength}} >
                     <div className="relative w-full h-full p-10 overflow-hidden">
@@ -207,6 +255,9 @@ const ScrollingCarousel = () => {
                         <p className="text-white font-sans font-black text-xl overflow-hidden h-fit opacity-80 italic" style={{whiteSpace: 'pre-line'}}>{x.date}</p>
                         <div className="text-white font-sans text-xl overflow-hidden h-fit opacity-60" style={{whiteSpace: 'pre-line'}}><Markdown >{x.description}</Markdown></div>
                     </div>
+                    <button ref={(el) => assignArrowRef(el, i)} onClick={(el) => swipeRightButton(el, i)} className={`z-10 cursor-pointer absolute top-1/2 -translate-y-1/2 transle right-10 h-20 w-20 transition-all duration-300 opacity-0`}>
+                        <Image src="/carousel_arrow.png" alt="Navigation Arrow" fill={true}/>
+                    </button>
                 </div>
             })
             }
