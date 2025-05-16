@@ -4,7 +4,7 @@
 
 cd /app
 npm i
-npm run dev
+npm run start
 tail -f /dev/null
 
 
