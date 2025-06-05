@@ -118,17 +118,27 @@ const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Re
             </div>
 
             <div className="relative bg-[#00000060] w-160 h-full flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <div className="absolute bg-[#FFFFFF40] opacity-10 w-full -mt-10 h-650 md:flex blur-md "></div>
+                <div className="absolute bg-[#FFFFFF40] opacity-10 w-full -mt-10 h-680 md:flex blur-md "></div>
                 <div className="relative flex flex-col gap-2 items-center">
-                    <div className="relative w-40 h-40">
+                    <p className="text-[#FFFFFF] font-raleway-sans font-bold text-3xl opacity-100" >Current Position</p>
+                    <div className="relative w-40 h-40 mt-2">
                         <Image className="blur-2xl" src={"/polarisLogo.svg"} fill={true} alt="Polaris Logo"></Image>
                         <Image src={"/polarisLogo.svg"} fill={true} alt="Polaris Logo"></Image>
                     </div>
                     <p className="text-[#FFFFFF] font-raleway-sans text-3xl mt-2 font-bold" >Polaris</p>
                     <p className="text-[#FFFFFF] font-raleway-sans text-xl opacity-50" >Front-End Developer</p>
+                    
                 </div>
-                <ArrowWithText text="On Going"/>
-                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Current portfolio is first published</p>
+                <div className="mt-10">
+                    <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">Obtained position in Polaris as Front-End Developer</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Obtained position in Polaris as Front-End Developer</p>
+                </div>
+                
+                <ArrowWithText text="2 June 2025"/>
+                <div>
+                    <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">Current portfolio is first published</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Current portfolio is first published</p>
+                </div>
                 <ArrowWithText text="15 May 2025"/>
                 <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Made small 3d demo website</p>
                 <ArrowWithText text="21 May 2025"/>
