@@ -11,6 +11,18 @@ import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
 
 gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle);
 
+const ArrowWithText = ({text} : {text: string}) => {
+    return(<>
+        <div className="relative mt-4 flex flex-col items-center">
+            <div className="relative h-40 w-20 opacity-70">
+                <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+            </div>
+            <p className="top-16.5 absolute whitespace-nowrap text-white font-bold opacity-70">{text}</p>
+        </div>
+    </>)
+}
+
 const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Ref<HTMLElement | null>, aboutmeRef: React.Ref<HTMLElement | null>}) => {
     const titleBlurRef = useRef<HTMLHeadingElement | null>(null);
     const titleRef = useRef<HTMLHeadingElement | null>(null);
@@ -105,41 +117,38 @@ const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Re
                 </div>
             </div>
 
-            <div className="relative bg-[#00000060] w-160 h-full flex flex-col items-center overflow-y-scroll max-h-full py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                <div className="absolute bg-[#FFFFFF40] opacity-5 w-full h-full md:flex blur-md ">
-                </div>
-                <div><p className="text-[#FFFFFF] font-raleway-sans text-xl">Position at Polaris</p></div>
-                <div className="relative mt-2 flex flex-col items-center">
-                    <div className="relative h-40 w-20 opacity-70">
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+            <div className="relative bg-[#00000060] w-160 h-full flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="absolute bg-[#FFFFFF40] opacity-10 w-full -mt-10 h-650 md:flex blur-md "></div>
+                <div className="relative flex flex-col gap-2 items-center">
+                    <div className="relative w-40 h-40">
+                        <Image className="blur-2xl" src={"/polarisLogo.svg"} fill={true} alt="Polaris Logo"></Image>
+                        <Image src={"/polarisLogo.svg"} fill={true} alt="Polaris Logo"></Image>
                     </div>
-                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">15 May 2025</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-3xl mt-2 font-bold" >Polaris</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-xl opacity-50" >Front-End Developer</p>
                 </div>
+                <ArrowWithText text="On Going"/>
                 <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Current portfolio is first published</p>
-                <div className="relative mt-4 flex flex-col items-center">
-                    <div className="relative h-40 w-20 opacity-70">
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                    </div>
-                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">15 May 2025</p>
+                <ArrowWithText text="15 May 2025"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Made small 3d demo website</p>
+                <ArrowWithText text="21 May 2025"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Published Beta Widgets Crate App on Github</p>
+                <ArrowWithText text="29 April 2025"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Competed in Cyberchallenge finals in Turin</p>
+                <ArrowWithText text="29 July 2024"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Trinity B2.1 Certification</p>
+                <ArrowWithText text="May of 2024"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Started doing freelance work</p>
+                <ArrowWithText text="2024"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Got past school selection in Olyciber</p>
+                <ArrowWithText text="December of 2023"/>
+                <div>
+                    <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">First look into web development</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">First look into web development</p>
                 </div>
-                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">First look into web development</p>
-                <div className="relative mt-4 flex flex-col items-center">
-                    <div className="relative h-40 w-20 opacity-70">
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                    </div>
-                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">2022</p>
-                </div>
-                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Small game dev experience</p>
-                <div className="relative mt-4 flex flex-col items-center">
-                    <div className="relative h-40 w-20 opacity-70">
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
-                    </div>
-                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">2020 - 2021</p>
-                </div>
+                <ArrowWithText text="2022"/>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Small game dev experience</p>
+                <ArrowWithText text="2020 - 2021"/>
                 <div>
                     <p className="absolute text-[#FFFFFF] font-raleway-sans text-4xl mt-10 font-bold blur-2xl">JOURNEY BEGINS</p>
                     <p className="text-[#FFFFFF] font-raleway-sans text-4xl mt-10 font-bold">JOURNEY BEGINS</p>
