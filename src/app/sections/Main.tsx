@@ -2,11 +2,50 @@
 'use client'
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
+import gsap from "gsap"
+import { CustomEase } from "gsap/CustomEase";
+import { CustomBounce } from "gsap/CustomBounce";
+import { CustomWiggle } from "gsap/CustomWiggle";
+
+import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
+
+gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle);
+
 const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Ref<HTMLElement | null>, aboutmeRef: React.Ref<HTMLElement | null>}) => {
+    const titleBlurRef = useRef<HTMLHeadingElement | null>(null);
+    const titleRef = useRef<HTMLHeadingElement | null>(null);
+    const subtitleRef = useRef<HTMLParagraphElement | null>(null);
     const ref = useRef<HTMLDivElement | null>(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        if(titleBlurRef.current != null){
+            gsap.from(titleRef.current, {
+                duration:1,
+                ease: CustomWiggle.create("myWiggle", {
+                wiggles:10,
+                type:"easeInOut"
+                }),
+                opacity: 1
+            })
+            gsap.from(titleBlurRef.current, {
+                duration:1,
+                ease: CustomWiggle.create("myWiggle", {
+                wiggles:10,
+                type:"easeInOut"
+                }),
+                color: "#FFFFFF"
+            })
+        }
+
+        if(subtitleRef.current != null){
+            gsap.to(subtitleRef.current, {
+                delay: 1,
+                opacity: 1
+            });
+        }
+        
+
         const observer = new IntersectionObserver(
             ([entry]) => setIsVisible(entry.isIntersecting),
             { threshold: 0.1 }
@@ -29,44 +68,83 @@ const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Re
     };
 
     return(
-        <main ref={ref}
-        className={`min-h-180 h-screen w-screen flex items-center justify-center flex-row relative gap-120 transition-all duration-1000 ease-in-out transform ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}>
+        <main ref={ref} className={`min-h-180 h-screen w-screen flex items-center justify-center flex-row relative gap-40 transition-all duration-1000 ease-in-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div className="h-fit z-10 px-10 xl:pl-0">
-            <h1 className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white">Filippo Grochala</h1>
-            <div className="mt-2 relative w-full flex flex-col items-center sm:items-start">
-                <p className="text-3xl w-80 sm:w-fit text-center sm:text-left sm:text-3xl opacity-70 font-sans text-white">Web and Mobile Developer since 2020</p>
+                <div className="relative">
+                    <h1 ref={titleRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
+                    <h1 ref={titleBlurRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
+                </div>
+                <div className="mt-2 relative w-full flex flex-col items-center sm:items-start">
+                    <div ref={subtitleRef} className="relative opacity-50 ">
+                        <p className="absolute text-3xl w-80 sm:w-fit text-center sm:text-left sm:text-3xl opacity-70 font-sans text-white blur-xs select-none">Web and Mobile Developer since 2020</p>
+                        <p className="text-3xl w-80 sm:w-fit text-center sm:text-left sm:text-3xl opacity-70 font-sans text-white">Web and Mobile Developer since 2020</p>
+                    </div>
+                    <div>
+                        <p className="text-xl w-72 sm:w-fit text-center sm:text-left sm:text-xl mt-2 opacity-60 font-sans text-white">On this page you will find everything you need to know about</p>
+                        <p className="text-xl w-72 sm:w-fit text-center sm:text-left sm:text-xl font-sans text-white">
+                            <button onClick={scrollToAboutme} className="group cursor-pointer text-[#E49D53]">me<div className="group-hover:w-full h-0.5 w-0 bg-[#E49D53] duration-100"></div></button>
+                            <span className="opacity-80">, my </span>
+                            <button onClick={scrollToSkills} className="group cursor-pointer text-[#D87B26]">skills<div className="group-hover:w-full h-0.5 w-0 bg-[#D87B26] duration-100"></div></button>
+                            <span className="opacity-80">, and my </span>
+                            <button onClick={() => window.location.href = 'https://github.com/FilippoDude'} className="group cursor-pointer text-[#425173]">projects<div className="group-hover:w-full h-0.5 w-0 bg-[#425173] duration-100"></div></button>
+                        </p>
+                    </div>
+                </div>
+                <div className="mt-4 min-w-fit relative flex flex-col md:flex-row items-center sm:items-start md:items-center gap-2">
+                    <div className="flex flex-col sm:flex-row gap-4 items-center bg-[#17192A] px-4 py-4 sm:py-4 peer-16 rounded-2xl justify-center h-fit sm:h-16 min-w-fit flex-shrink-0">
+                    <img className="h-10" src="https://skillicons.dev/icons?i=html,css,react,nodejs,typescript"></img>
+                    <div className="hidden sm:flex min-w-0.5 h-10 bg-white opacity-70"/>
+                    <img className="h-10"  src="https://skillicons.dev/icons?i=androidstudio,flutter,kotlin"></img>
+                    <div className="hidden sm:flex min-w-0.5 h-10 bg-white opacity-70"/>
+                    <img className="h-10"  src="https://skillicons.dev/icons?i=git,docker"></img>
+                    </div>
+                    <Image className="hidden md:flex" src="arrow1.svg" alt="Pointing Arrow" width={40} height={0}/>
+                    <button onClick={() => window.location.href = 'https://t.me/FIlippodude'} className="relative mt-2 md:mt-0 font-sans font-bold text-2xl bg-[#17192A] text-white px-4 h-16 rounded-2xl duration-200 hover:opacity-90 cursor-grab opacity-50">CONNECT
+                        <Image className="absolute -top-3 -right-3" src="lamp.svg" alt="Lamp" width={30} height={0}></Image>
+                    </button>
+                </div>
+            </div>
+
+            <div className="relative bg-[#00000060] w-160 h-full flex flex-col items-center overflow-y-scroll max-h-full py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <div className="absolute bg-[#FFFFFF40] opacity-5 w-full h-full md:flex blur-md ">
+                </div>
+                <div><p className="text-[#FFFFFF] font-raleway-sans text-xl">Position at Polaris</p></div>
+                <div className="relative mt-2 flex flex-col items-center">
+                    <div className="relative h-40 w-20 opacity-70">
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                    </div>
+                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">15 May 2025</p>
+                </div>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Current portfolio is first published</p>
+                <div className="relative mt-4 flex flex-col items-center">
+                    <div className="relative h-40 w-20 opacity-70">
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                    </div>
+                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">15 May 2025</p>
+                </div>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">First look into web development</p>
+                <div className="relative mt-4 flex flex-col items-center">
+                    <div className="relative h-40 w-20 opacity-70">
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                    </div>
+                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">2022</p>
+                </div>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Small game dev experience</p>
+                <div className="relative mt-4 flex flex-col items-center">
+                    <div className="relative h-40 w-20 opacity-70">
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                        <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
+                    </div>
+                    <p className="top-17 absolute whitespace-nowrap text-white font-bold opacity-70">2020 - 2021</p>
+                </div>
                 <div>
-                    <p className="text-xl w-72 sm:w-fit text-center sm:text-left sm:text-xl mt-2 opacity-60 font-sans text-white">On this page you will find everything you need to know about</p>
-                    <p className="text-xl w-72 sm:w-fit text-center sm:text-left sm:text-xl font-sans text-white">
-                        <button onClick={scrollToAboutme} className="group cursor-pointer text-[#E49D53]">me<div className="group-hover:w-full h-0.5 w-0 bg-[#E49D53] duration-100"></div></button>
-                        <span className="opacity-80">, my </span>
-                        <button onClick={scrollToSkills} className="group cursor-pointer text-[#D87B26]">skills<div className="group-hover:w-full h-0.5 w-0 bg-[#D87B26] duration-100"></div></button>
-                        <span className="opacity-80">, and my </span>
-                        <button onClick={() => window.location.href = 'https://github.com/FilippoDude'} className="group cursor-pointer text-[#425173]">projects<div className="group-hover:w-full h-0.5 w-0 bg-[#425173] duration-100"></div></button>
-                    </p>
+                    <p className="absolute text-[#FFFFFF] font-raleway-sans text-4xl mt-10 font-bold blur-2xl">JOURNEY BEGINS</p>
+                    <p className="text-[#FFFFFF] font-raleway-sans text-4xl mt-10 font-bold">JOURNEY BEGINS</p>
                 </div>
             </div>
-            <div className="mt-4 min-w-fit relative flex flex-col md:flex-row items-center sm:items-start md:items-center gap-2">
-                <div className="flex flex-col sm:flex-row gap-4 items-center bg-[#17192A] px-4 py-4 sm:py-4 peer-16 rounded-2xl justify-center h-fit sm:h-16 min-w-fit flex-shrink-0">
-                <img className="h-10" src="https://skillicons.dev/icons?i=html,css,react,nodejs,typescript"></img>
-                <div className="hidden sm:flex min-w-0.5 h-10 bg-white opacity-70"/>
-                <img className="h-10"  src="https://skillicons.dev/icons?i=androidstudio,flutter,kotlin"></img>
-                <div className="hidden sm:flex min-w-0.5 h-10 bg-white opacity-70"/>
-                <img className="h-10"  src="https://skillicons.dev/icons?i=git,docker"></img>
-                {/*<a className="rounded-xl bg-[#2E3754] p-2 opacity-50 text-white h-fit duration-200 hover:-translate-y-1 hover:opacity-90 cursor-grab select-none" href="https://it.fiverr.com/sellers/filippodude">Fiverr</a>
-                <a className="rounded-xl bg-[#2E3754] p-2 opacity-50 text-white h-fit duration-200 hover:-translate-y-1 hover:opacity-90 cursor-grab select-none" href="https://t.me/FIlippodude">Telegram</a>*/}
-                </div>
-                <Image className="hidden md:flex" src="arrow1.svg" alt="Pointing Arrow" width={40} height={0}/>
-                <button onClick={() => window.location.href = 'https://t.me/FIlippodude'} className="relative mt-2 md:mt-0 font-sans font-bold text-2xl bg-[#17192A] text-white px-4 h-16 rounded-2xl duration-200 hover:opacity-90 cursor-grab opacity-50">CONNECT
-                <Image className="absolute -top-3 -right-3" src="lamp.svg" alt="Lamp" width={30} height={0}></Image>
-                </button>
-                {/*<a className="w-full mt-2 rounded-3xl bg-[#425173] opacity-50 p-2 text-center text-white duration-200 hover:opacity-90 select-none cursor-grab" href="https://github.com/FilippoDude">Github</a>*/}
-            </div>
-            </div>
-            <div className="hidden md:flex"></div>
-            {/*<DisappearingText><a className="absolute bottom-0 left-1 z-10 text-white opacity-50">Past Portfolio</a></DisappearingText>*/}
         </main>
     )
 }   
