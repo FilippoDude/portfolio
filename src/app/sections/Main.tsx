@@ -1,7 +1,7 @@
 
 'use client'
 import Image from "next/image"
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { CustomEase } from "gsap/CustomEase";
 import { CustomBounce } from "gsap/CustomBounce";
@@ -23,21 +23,41 @@ const ArrowWithText = ({text} : {text: string}) => {
     </>)
 }
 
-const Timeline = forwardRef((props, ref) => {
+const Timeline = forwardRef((_, ref) => {
+    const CHANGE_WIDTH = 1280
     const [isVisible, setIsVisible] = useState<boolean>(false)
     const internalRef = useRef<HTMLDivElement | null>(null)
-    const toggleVisibility = () => {
-        if(!isVisible){
+
+    useEffect(() => {
+        if(isVisible){
             gsap.set(internalRef.current, {
                 display: "flex"
             });
-            setIsVisible(true)
         } else {
-            gsap.to(internalRef.current, {
+            gsap.set(internalRef.current, {
                 display: "none"
             })
+        }
+    }, [isVisible])
+
+    const adaptToResize = ()=>{
+        if (!internalRef.current) return;   
+        if(window.innerWidth > CHANGE_WIDTH){
+            setIsVisible(true)
+        } else {
             setIsVisible(false)
         }
+    }
+
+    useLayoutEffect(() => {
+        adaptToResize();
+        window.addEventListener("resize", adaptToResize);
+        return () => window.removeEventListener("resize", adaptToResize);
+    }, []);
+
+    const toggleVisibility = () => {
+        if(window.innerWidth > CHANGE_WIDTH){return}
+        setIsVisible(current => !current)
     }
 
     useImperativeHandle(ref, () => ({
@@ -45,8 +65,9 @@ const Timeline = forwardRef((props, ref) => {
     }));
 
     return(
-        <div ref={internalRef} className="hidden xl:relative z-50 bg-[#000000] xl:bg-[#00000060] fixed w-full xl:w-160 h-full xl:flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <button onClick={toggleVisibility} className="absolute top-2 left-2 w-20 h-20 bg-[#FFFFFF10] rounded-2xl z-30"></button>
+        <div ref={internalRef} className="text-center hidden z-50 bg-[#000000] xl:bg-[#00000060] left-0 fixed xl:relative w-full xl:w-160 h-full xl:flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <div className="absolute -left-175 -top-175 w-200 h-200 bg-[#0F101B] blur-[300px]"/>
+            <button onClick={toggleVisibility} className={`absolute top-2 left-2 w-20 h-20 bg-[#0F101B80] rounded-2xl z-30 flex xl:hidden items-center justify-center`}><div className="relative w-4/5 h-4/5 -mt-2"><Image src={"/home.svg"} alt="Home Logo" fill={true}></Image></div></button>
             <div className="absolute bg-[#FFFFFF40] opacity-10 w-full -mt-10 h-680 md:flex blur-md "></div>
             <div className="relative flex flex-col gap-2 items-center">
                 <p className="text-[#FFFFFF] font-raleway-sans font-bold text-3xl opacity-100" >Current Position</p>
@@ -95,6 +116,8 @@ const Timeline = forwardRef((props, ref) => {
         </div>
     )
 })
+
+Timeline.displayName = "Timeline";
 
 const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Ref<HTMLElement | null>, aboutmeRef: React.Ref<HTMLElement | null>}) => {
     const titleBlurRef = useRef<HTMLHeadingElement | null>(null);
@@ -160,8 +183,8 @@ const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Re
     }
 
     return(
-        <main ref={ref} className={`min-h-180 h-screen w-screen flex items-center justify-center flex-row relative gap-40 transition-all duration-1000 ease-in-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <div className="h-fit z-10 px-10 xl:pl-0">
+        <main ref={ref} className={`min-h-180 h-screen w-screen flex items-center justify-center flex-row relative gap-40`}>
+            <div className={`h-fit z-10 px-10 xl:pl-0 transition-all duration-1000 ease-in-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
                 <div className="relative">
                     <h1 ref={titleRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
                     <h1 ref={titleBlurRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
