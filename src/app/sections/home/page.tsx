@@ -1,6 +1,6 @@
 'use client'
-import ScrollingCarousel from "./components/InfiniteSmartCarousel";
-import ContactsButtons from "./components/ContactsButtons";
+import ScrollingCarousel from "../../components/InfiniteSmartCarousel";
+import ContactsButtons from "../../components/ContactsButtons";
 import MainSection from "./sections/Main";
 import SkillsSection from "./sections/Skills";
 import { useRef } from "react";
