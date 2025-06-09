@@ -5,12 +5,43 @@ import gsap from "gsap"
 const ArrowWithText = ({text} : {text: string}) => {
     return(<>
         <div className="relative mt-4 flex flex-col items-center">
-            <div className="relative h-40 w-20 opacity-70">
+            <div className="relative h-40 w-20 opacity-40">
                 <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
                 <Image src={"/hollowArrow.svg"} alt="hollowArrow" fill={true}></Image>
             </div>
-            <p className="top-16.5 absolute whitespace-nowrap text-white font-bold opacity-70">{text}</p>
+            <p className="top-16.5 absolute whitespace-nowrap text-white font-bold opacity-40">{text}</p>
         </div>
+    </>)
+}
+
+const Milestone = ({text, highlighted, callback} : {text: string, highlighted: boolean, callback: (() => void) | undefined}) => {
+    return(<>
+        {callback == undefined ? 
+            highlighted ? 
+            <div>
+                <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">{text}</p>
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">{text}</p>
+            </div>
+            :
+            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">{text}</p>    
+        :
+            
+            <button onClick={callback} className="relative flex flex-row border-b-1 border-[#FFFFFF60] items-center mt-4 justify-center cursor-pointer">
+                {highlighted ? 
+                    <button className="relative h-fit">
+                        <p className="absolute bottom-0 text-[#FFFFFF] font-raleway-sans text-xl font-bold blur-md">{text}</p>
+                        <p className="text-[#FFFFFF] font-raleway-sans text-xl font-bold">{text}</p>
+                    </button>
+                : 
+                
+                <p className="text-[#FFFFFF] font-raleway-sans text-xl font-bold opacity-80  ">{text}</p>  
+                }
+                <div className="relative w-5 h-5 opacity-80">
+                    <Image src={"smallRightArrow.svg"} alt="Small right arrow" fill={true} ></Image>
+                </div>
+            </button>
+
+        }
     </>)
 }
 
@@ -89,29 +120,23 @@ const Timeline = forwardRef((_, ref) => {
             </div>
             
             <ArrowWithText text="2 June 2025"/>
-            <div>
-                <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">Current portfolio is first published</p>
-                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">Current portfolio is first published</p>
-            </div>
+            <Milestone text="Current portfolio is first published" highlighted={true} callback={undefined}/>
             <ArrowWithText text="15 May 2025"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Made small 3d demo website</p>
+            <Milestone text="Made small 3d demo website" highlighted={false} callback={() => window.location.href = 'https://infinitybar.filippodude.cc/'}/>
             <ArrowWithText text="21 May 2025"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Published Beta Widgets Crate App on Github</p>
+            <Milestone text="Published Beta Widgets Crate App on Github" highlighted={false} callback={() => window.location.href = 'https://github.com/FilippoDude/widgetscratepub/releases/tag/beta'}/>
             <ArrowWithText text="29 April 2025"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Competed in Cyberchallenge finals in Turin</p>
+            <Milestone text="Competed in Cyberchallenge finals in Turin" highlighted={false} callback={() => window.location.href = 'https://cyberchallenge.it/'}/>
             <ArrowWithText text="29 July 2024"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Trinity B2.1 Certification</p>
+            <Milestone text="Trinity B2.1 Certification" highlighted={false} callback={undefined}/>
             <ArrowWithText text="May of 2024"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Started doing freelance work</p>
+            <Milestone text="Started doing freelance work" highlighted={false} callback={() => window.location.href = 'https://www.fiverr.com/s/5rQzmWz'}/>
             <ArrowWithText text="2024"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Got past school selection in Olyciber</p>
+            <Milestone text="Got past school selection in Olyciber" highlighted={false} callback={() => window.location.href = 'https://olicyber.it/'}/>
             <ArrowWithText text="December of 2023"/>
-            <div>
-                <p className="absolute text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold blur-md">First look into web development</p>
-                <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold">First look into web development</p>
-            </div>
+            <Milestone text="First look into web development" highlighted={true} callback={undefined}/>
             <ArrowWithText text="2022"/>
-            <p className="text-[#FFFFFF] font-raleway-sans text-xl mt-4 font-bold opacity-80">Small game dev experience</p>
+            <Milestone text="Small game dev experience" highlighted={false} callback={undefined}/>
             <ArrowWithText text="2020 - 2021"/>
             <div>
                 <p className="absolute text-[#FFFFFF] font-raleway-sans text-4xl mt-10 font-bold blur-2xl">JOURNEY BEGINS</p>
