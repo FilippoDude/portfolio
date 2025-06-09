@@ -1,14 +1,13 @@
 
 'use client'
 import Image from "next/image"
-import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react"
+import {useEffect, useRef, useState } from "react"
 import gsap from "gsap"
 import { CustomEase } from "gsap/CustomEase";
 import { CustomBounce } from "gsap/CustomBounce";
 import { CustomWiggle } from "gsap/CustomWiggle";
 import Timeline from "../../../components/Timeline";
 import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
-import NavigationButton from "@/app/components/Navigation";
 
 gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle);
 
