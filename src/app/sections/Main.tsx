@@ -43,6 +43,7 @@ const Timeline = forwardRef((_, ref) => {
     const adaptToResize = ()=>{
         if (!internalRef.current) return;   
         if(window.innerWidth > CHANGE_WIDTH){
+            document.body.style.overflow = ""
             setIsVisible(true)
         } else {
             setIsVisible(false)
@@ -57,7 +58,15 @@ const Timeline = forwardRef((_, ref) => {
 
     const toggleVisibility = () => {
         if(window.innerWidth > CHANGE_WIDTH){return}
-        setIsVisible(current => !current)
+        setIsVisible(current => {
+            const newCurrent = !current
+            if(newCurrent){
+                document.body.style.overflow = "hidden"
+            } else {
+                document.body.style.overflow = "auto"
+            }
+            return newCurrent
+        })
     }
 
     useImperativeHandle(ref, () => ({
@@ -65,9 +74,9 @@ const Timeline = forwardRef((_, ref) => {
     }));
 
     return(
-        <div ref={internalRef} className="text-center hidden z-50 bg-[#000000] xl:bg-[#00000060] left-0 fixed xl:relative w-full xl:w-160 h-full xl:flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <div className="absolute -left-175 -top-175 w-200 h-200 bg-[#0F101B] blur-[300px]"/>
-            <button onClick={toggleVisibility} className={`absolute top-2 left-2 w-20 h-20 bg-[#0F101B80] rounded-2xl z-30 flex xl:hidden items-center justify-center`}><div className="relative w-4/5 h-4/5 -mt-2"><Image src={"/home.svg"} alt="Home Logo" fill={true}></Image></div></button>
+        <div ref={internalRef} className="text-center hidden z-50 bg-[#000000] xl:bg-[#00000060] left-0 top-0 fixed xl:relative w-full xl:w-160 h-full xl:flex flex-col items-center overflow-y-scroll py-20 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <div className="fixed -right-175 -bottom-175 w-200 h-200 bg-[#0F101B] blur-[300px]"/>
+            <button onClick={toggleVisibility} className={`fixed bottom-2 right-2 w-20 h-20 bg-[#0F101B80] rounded-2xl z-30 flex xl:hidden items-center justify-center`}><div className="relative w-4/5 h-4/5 -mt-2"><Image src={"/home.svg"} alt="Home Logo" fill={true}></Image></div></button>
             <div className="absolute bg-[#FFFFFF40] opacity-10 w-full -mt-10 h-680 md:flex blur-md "></div>
             <div className="relative flex flex-col gap-2 items-center">
                 <p className="text-[#FFFFFF] font-raleway-sans font-bold text-3xl opacity-100" >Current Position</p>
