@@ -33,3 +33,19 @@ body {
   -ms-overflow-style: none; 
   scrollbar-width: none; 
 }
+
+.navigation-button{
+  padding: 2px 2px;
+  border-radius: 2px;
+  background: linear-gradient(45deg, #22273E, #2E3754);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+          mask-composite: exclude;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      background-clip: border-box;
+}
