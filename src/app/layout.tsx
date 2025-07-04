@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope, Raleway} from "next/font/google";
 import "./globals.css";
+import NavigationButton from "./components/Navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}>
+        <NavigationButton/>
         {children}
       </body>
     </html>

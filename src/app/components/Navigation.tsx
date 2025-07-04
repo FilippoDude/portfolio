@@ -5,19 +5,24 @@ import { useRef } from "react";
 const NavigationMenu = () => {
     return (
         <div className="w-70 h-full bg-[#42517340] backdrop-blur-2xl flex flex-col items-center pt-4 gap-1">
-
-            <button className="relative text-white z-60 flex items-center w-9/10 py-2 shadow-[0_0_6px_2px_#22273E]">
-                <div className="absolute navigation-button w-full h-full"></div>
-                <p className="pl-2">Home</p>
-                <div className="absolute right-2 w-6 h-6">
+            <button className="cursor-pointer relative text-white z-60 flex items-center max-w-9/10 w-9/10 py-2 group">
+                <div className="absolute w-full h-full"></div>
+                <div className="relative w-6 h-6 group-hover:translate-x-1 duration-100">
                     <Image alt="Hollow right arrow" src={"/hollowArrowRight.svg"} fill={true}/>
                 </div>
+                <div className="relative w-full flex flex-col gap-1 items-start pr-4">
+                    <p className="pl-2 font-bold">Home</p>
+                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl"></div>
+                </div>
             </button>
-            <button className="relative text-white z-60 flex items-center w-9/10 py-2 shadow-[0_0_6px_2px_#22273E]">
-                <div className="absolute navigation-button w-full h-full"></div>
-                <p className="pl-2">AI</p>
-                <div className="absolute right-2 w-6 h-6">
+            <button className="cursor-pointer relative text-white z-60 flex items-center max-w-9/10 w-9/10 py-2 group">
+                <div className="absolute w-full h-full"></div>
+                <div className="relative w-6 h-6 group-hover:translate-x-1 duration-100">
                     <Image alt="Hollow right arrow" src={"/hollowArrowRight.svg"} fill={true}/>
+                </div>
+                <div className="relative w-full flex flex-col gap-1 items-start pr-4">
+                    <p className="pl-2 font-bold">Ai</p>
+                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl"></div>
                 </div>
             </button>
         </div>
