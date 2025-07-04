@@ -1,3 +1,15 @@
-<svg width="18" height="24" viewBox="0 0 18 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M4.7168 6.24512C4.51743 6.11221 4.25 6.25551 4.25 6.49512V17.5049C4.25 17.7144 4.4541 17.8501 4.63867 17.792L4.7168 17.7549L13.3486 12L4.7168 6.24512Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<svg
+width="18"
+height="24"
+viewBox="0 0 18 24"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+className="stroke-white group-hover:stroke-yellow-400 transition-colors duration-300"
+>
+<path
+    d="M4.7168 6.24512C4.51743 6.11221 4.25 6.25551 4.25 6.49512V17.5049C4.25 17.7144 4.4541 17.8501 4.63867 17.792L4.7168 17.7549L13.3486 12L4.7168 6.24512Z"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+/>
 </svg>
+

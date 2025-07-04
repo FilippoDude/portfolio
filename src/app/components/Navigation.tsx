@@ -8,21 +8,47 @@ const NavigationMenu = () => {
             <button className="cursor-pointer relative text-white z-60 flex items-center max-w-9/10 w-9/10 py-2 group">
                 <div className="absolute w-full h-full"></div>
                 <div className="relative w-6 h-6 group-hover:translate-x-1 duration-100">
-                    <Image alt="Hollow right arrow" src={"/hollowArrowRight.svg"} fill={true}/>
+                    <svg
+                        width="18"
+                        height="24"
+                        viewBox="0 0 18 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-white group-hover:stroke-yellow-400 transition-colors duration-300"
+                    >
+                        <path
+                            d="M4.7168 6.24512C4.51743 6.11221 4.25 6.25551 4.25 6.49512V17.5049C4.25 17.7144 4.4541 17.8501 4.63867 17.792L4.7168 17.7549L13.3486 12L4.7168 6.24512Z"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
                 </div>
                 <div className="relative w-full flex flex-col gap-1 items-start pr-4">
                     <p className="pl-2 font-bold">Home</p>
-                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl"></div>
+                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl group-hover:bg-yellow-400 transition-colors duration-300"></div>
                 </div>
             </button>
             <button className="cursor-pointer relative text-white z-60 flex items-center max-w-9/10 w-9/10 py-2 group">
                 <div className="absolute w-full h-full"></div>
                 <div className="relative w-6 h-6 group-hover:translate-x-1 duration-100">
-                    <Image alt="Hollow right arrow" src={"/hollowArrowRight.svg"} fill={true}/>
+                    <svg
+                        width="18"
+                        height="24"
+                        viewBox="0 0 18 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="stroke-white group-hover:stroke-yellow-400 transition-colors duration-300"
+                    >
+                        <path
+                            d="M4.7168 6.24512C4.51743 6.11221 4.25 6.25551 4.25 6.49512V17.5049C4.25 17.7144 4.4541 17.8501 4.63867 17.792L4.7168 17.7549L13.3486 12L4.7168 6.24512Z"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
                 </div>
                 <div className="relative w-full flex flex-col gap-1 items-start pr-4">
                     <p className="pl-2 font-bold">Ai</p>
-                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl"></div>
+                    <div className="w-full h-0.5 bg-[#FFFFFFBB] rounded-2xl group-hover:bg-yellow-400 transition-colors duration-300"></div>
                 </div>
             </button>
         </div>
