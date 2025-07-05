@@ -10,6 +10,7 @@ function MovingBox({}){
     const jumpRef = useRef({
         isJumping: false,
         angle: 0,    
+        startY: 0
     });
 
     function setToJump(){
@@ -36,9 +37,16 @@ function MovingBox({}){
             state.camera.position.x = boxRef.current.position.x
 
             if(jumpRef.current.isJumping){
-
-                boxRef.current.position.y += Math.sin(jumpRef.current.angle) / 8
-                jumpRef.current.angle += 0.1
+                const jumpHeight = 2;
+                const speed = 2;
+                const baseY = jumpRef.current.startY ?? (jumpRef.current.startY = boxRef.current.position.y);
+                jumpRef.current.angle = (jumpRef.current.angle + delta * speed) % (2 * Math.PI);
+                boxRef.current.position.y = baseY + Math.sin(jumpRef.current.angle) * jumpHeight;
+                if(jumpRef.current.angle >= Math.PI){
+                    jumpRef.current.isJumping = false
+                    jumpRef.current.angle = 0
+                    jumpRef.current.startY = 0
+                }
             }
         }
 
