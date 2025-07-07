@@ -9,6 +9,9 @@ const GamePage = () => {
             <div className="w-200 h-100 bg-white">
                 <Game/>
             </div>
+            <div className="mt-2">
+                <p className="text-white">Press space or click to jump</p>
+            </div>
         </div>
     )
 }

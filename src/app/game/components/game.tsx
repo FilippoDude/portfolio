@@ -1,9 +1,7 @@
-import { OrbitControls } from "@react-three/drei"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { useEffect, useRef, useState } from "react"
 import { Mesh } from "three"
 import { GameProvider, useGame } from "../hooks/gameContext"
-import { addListener } from "process"
 
 function MovingBox({}){
     const boxRef = useRef<Mesh | null>(null)
@@ -43,9 +41,9 @@ function MovingBox({}){
                 jumpRef.current.angle = (jumpRef.current.angle + delta * speed) % (2 * Math.PI);
                 boxRef.current.position.y = baseY + Math.sin(jumpRef.current.angle) * jumpHeight;
                 if(jumpRef.current.angle >= Math.PI){
+                    boxRef.current.position.y = baseY;
                     jumpRef.current.isJumping = false
                     jumpRef.current.angle = 0
-                    jumpRef.current.startY = 0
                 }
             }
         }
