@@ -25,9 +25,7 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                 setToJump()
             }
         };
-
         window.addEventListener("keydown", handleKeyDown);
-        
         return () => {
             window.removeEventListener("keydown", handleKeyDown)
         }
