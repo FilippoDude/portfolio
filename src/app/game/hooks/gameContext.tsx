@@ -10,7 +10,7 @@ type GameContextType = {
 const GameContext = createContext<GameContextType | undefined>(undefined)
 
 export const GameProvider = ({children} : {children: React.ReactNode}) => {
-    const [cameraPosition, setCameraPosition] = useState<PositionType>({x: 0, y: 0, z: 5})
+    const [cameraPosition, setCameraPosition] = useState<PositionType>({x: 0, y: 0, z: 10})
     
     function setNewCameraPosTo(newPos: PositionType){
         setCameraPosition(newPos)

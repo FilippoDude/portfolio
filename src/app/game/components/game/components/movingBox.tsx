@@ -1,10 +1,9 @@
-import { Canvas, useFrame } from "@react-three/fiber"
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef} from "react"
-import { Mesh } from "three"
-import { GameProvider, useGame } from "../hooks/gameContext"
-import { assignRef } from "@/helpers/helpers"
+'use client'
+import { useFrame } from "@react-three/fiber";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import { Mesh } from "three";
 
-interface movingBoxInterface {
+export interface movingBoxInterface {
     setToJump: () => void
 }
 const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
@@ -12,7 +11,7 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     const jumpRef = useRef({
         isJumping: false,
         angle: 0,    
-        startY: 0
+        startY: 0.5
     });
 
     const setToJump = () => {
@@ -21,21 +20,21 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.code === "Space") {
-            setToJump()
-        }
-    };
+            if (event.code === "Space") {
+                setToJump()
+            }
+        };
 
-    window.addEventListener("keydown", handleKeyDown);
-    
-    return () => {
-        window.removeEventListener("keydown", handleKeyDown)
-    }
+        window.addEventListener("keydown", handleKeyDown);
+        
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown)
+        }
     }, [])
 
     useFrame((state, delta) => {
         if(boxRef.current != null){
-            boxRef.current.position.x += delta * 0.5;
+            boxRef.current.position.x += delta * 1;
             state.camera.position.x = boxRef.current.position.x
 
             if(jumpRef.current.isJumping){
@@ -59,34 +58,12 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     }))
 
     return(            
-        <mesh ref={boxRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>
+        <mesh ref={boxRef} position={[0, 0.5, 0]} rotation={[0, 0, 0]}>
             <boxGeometry args={[1, 1, 1]}/>
             <meshStandardMaterial color="orange" />
         </mesh> 
     )
 })
-function GameCanvas () {
-    const movingBoxRef = useRef<movingBoxInterface | null>(null)
-    const {cameraPosition} = useGame()
-    const onClick = () => {
-        if(movingBoxRef.current != null){
-            movingBoxRef.current.setToJump()
-        }
-    }
-    return(
-        <Canvas onClick={onClick} className="w-full h-full relative cursor-pointer" camera={{position: [cameraPosition.x, cameraPosition.y, cameraPosition.z]}}>
-            <ambientLight />
-            <pointLight position={[10, 10, 10]} />
-            <MovingBox ref={movingBoxRef}/>
-        </Canvas>
-    )
-}
-const Game = () => {
-    return(
-        <GameProvider>
-            <GameCanvas/>
-        </GameProvider>
-    ) 
-}
 
-export default Game
+
+export default MovingBox
