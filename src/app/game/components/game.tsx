@@ -1,9 +1,13 @@
 import { Canvas, useFrame } from "@react-three/fiber"
-import { useEffect, useRef} from "react"
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef} from "react"
 import { Mesh } from "three"
 import { GameProvider, useGame } from "../hooks/gameContext"
+import { assignRef } from "@/helpers/helpers"
 
-function MovingBox({}){
+interface movingBoxInterface {
+    setToJump: () => void
+}
+const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     const boxRef = useRef<Mesh | null>(null)
     const jumpRef = useRef({
         isJumping: false,
@@ -11,7 +15,7 @@ function MovingBox({}){
         startY: 0
     });
 
-    function setToJump(){
+    const setToJump = () => {
         jumpRef.current.isJumping = true
     }
 
@@ -50,20 +54,30 @@ function MovingBox({}){
 
     });
 
+    useImperativeHandle(ref, ()=> ({
+        setToJump
+    }))
+
     return(            
         <mesh ref={boxRef} position={[0, 0, 0]} rotation={[0, 0, 0]}>
             <boxGeometry args={[1, 1, 1]}/>
             <meshStandardMaterial color="orange" />
         </mesh> 
     )
-}
+})
 function GameCanvas () {
+    const movingBoxRef = useRef<movingBoxInterface | null>(null)
     const {cameraPosition} = useGame()
+    const onClick = () => {
+        if(movingBoxRef.current != null){
+            movingBoxRef.current.setToJump()
+        }
+    }
     return(
-        <Canvas className="w-full h-full relative" camera={{position: [cameraPosition.x, cameraPosition.y, cameraPosition.z]}}>
+        <Canvas onClick={onClick} className="w-full h-full relative cursor-pointer" camera={{position: [cameraPosition.x, cameraPosition.y, cameraPosition.z]}}>
             <ambientLight />
             <pointLight position={[10, 10, 10]} />
-            <MovingBox/>
+            <MovingBox ref={movingBoxRef}/>
         </Canvas>
     )
 }
