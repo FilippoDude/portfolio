@@ -1,4 +1,5 @@
 'use client'
+import { useGame } from "@/app/game/hooks/gameContext";
 import { useFrame } from "@react-three/fiber";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Mesh } from "three";
@@ -33,10 +34,9 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     }, [])
 
     useFrame((state, delta) => {
-        if(boxRef.current != null){
+        if(boxRef.current != null){ // For some reason runs in background
             boxRef.current.position.x += delta * 1;
             state.camera.position.x = boxRef.current.position.x
-
             if(jumpRef.current.isJumping){
                 const jumpHeight = 2;
                 const speed = 2;
@@ -50,7 +50,6 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                 }
             }
         }
-
     });
 
     useImperativeHandle(ref, ()=> ({

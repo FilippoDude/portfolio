@@ -3,7 +3,6 @@ import {useRef} from "react"
 import { GameProvider, useGame } from "../../hooks/gameContext"
 import MovingBox, { movingBoxInterface } from "./components/movingBox"
 import Platform from "./components/platform"
-import { RotateNode } from "three/webgpu"
 
 function GameCanvas () {
     const movingBoxRef = useRef<movingBoxInterface | null>(null)
@@ -19,7 +18,6 @@ function GameCanvas () {
             <pointLight position={[10, 10, 10]} />
             <MovingBox ref={movingBoxRef}/>
             <Platform/>
-            
         </Canvas>
     )
 }
