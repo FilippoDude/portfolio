@@ -105,6 +105,6 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
         </mesh> 
     )
 })
-
+MovingBox.displayName = "Moving Box";
 
 export default MovingBox

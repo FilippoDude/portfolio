@@ -2,8 +2,8 @@ import { Canvas } from "@react-three/fiber"
 import {useEffect, useRef} from "react"
 import gsap from "gsap"
 import { GameProvider, useGame } from "../../hooks/gameContext"
-import MovingBox, { movingBoxInterface } from "./components/movingBox"
-import Platform, { platformInterface } from "./components/platform"
+import MovingBox from "./components/movingBox"
+import Platform from "./components/platform"
 
 function GameCanvas () {
     const unPauseButtonRef = useRef<HTMLButtonElement | null>(null)

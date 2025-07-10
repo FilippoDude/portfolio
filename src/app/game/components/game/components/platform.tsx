@@ -36,7 +36,7 @@ export interface platformInterface {
     restart: () => void
 }
 const Platform = forwardRef<platformInterface>((props, ref) => {
-    const {platformsRef, gameStatus, totalPlatforms, addPlatform, showDebug} = useGame()
+    const {platformsRef, gameStatus, addPlatform, showDebug} = useGame()
     const [platforms, setPlatforms] = useState<PlatformType[]>([]);
     const accumulatedGap = useRef<number>(0);
     const PLATFORM_SIZE = 12;
@@ -105,7 +105,7 @@ const Platform = forwardRef<platformInterface>((props, ref) => {
             {platforms.map((el, i) => {
                 console.log(`Render platform ${i} at: ${el.x + el.additionalGap}`);
                 return <mesh key={i} position={[el.x + el.additionalGap,el.y,0]} rotation={[0,0,0]}>
-                    <boxGeometry args={[12,el.height,0]} />
+                    <boxGeometry args={[12,el.height,2]} />
                     <meshStandardMaterial color={el.color}/>
                 </mesh>
             })}
@@ -130,5 +130,5 @@ const Platform = forwardRef<platformInterface>((props, ref) => {
         </>
     )
 })
-
+Platform.displayName = "Platform";
 export default Platform
