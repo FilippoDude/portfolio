@@ -1,5 +1,6 @@
 'use client'
 import { useGame } from "@/app/game/hooks/gameContext";
+import { getActualPlatformX } from "@/helpers/helpers";
 import { useFrame } from "@react-three/fiber";
 import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Mesh } from "three";
@@ -8,15 +9,21 @@ export interface movingBoxInterface {
     setToJump: () => void
 }
 const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
+    const {isPaused, platformsRef} = useGame()
     const boxRef = useRef<Mesh | null>(null)
     const jumpRef = useRef({
         isJumping: false,
         angle: 0,    
         startY: 0.5
     });
+    const fallRef = useRef({
+        isFalling: false
+    })
 
     const setToJump = () => {
-        jumpRef.current.isJumping = true
+        if(!fallRef.current.isFalling){
+            jumpRef.current.isJumping = true
+        }
     }
 
     useEffect(() => {
@@ -32,8 +39,10 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     }, [])
 
     useFrame((state, delta) => {
-        if(boxRef.current != null){ // For some reason runs in background
-            boxRef.current.position.x += delta * 1;
+        if(isPaused) return;
+
+        if(boxRef.current != null){ // Don't forget that delta exists
+            boxRef.current.position.x += delta * 2;
             state.camera.position.x = boxRef.current.position.x
             if(jumpRef.current.isJumping){
                 const jumpHeight = 2;
@@ -46,6 +55,27 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                     jumpRef.current.isJumping = false
                     jumpRef.current.angle = 0
                 }
+            }
+            if(fallRef.current.isFalling)
+            if(!fallRef.current.isFalling && platformsRef.current.length > 0){
+                let closestObject = platformsRef.current[0]
+                let closestObjectDistance = Math.abs(getActualPlatformX(platformsRef.current[0]) - boxRef.current.position.x)
+                for(let i = 0; i < platformsRef.current.length; i++){
+                    const distance = Math.abs(getActualPlatformX(platformsRef.current[i]) - boxRef.current.position.x)
+                    if(distance < closestObjectDistance){
+                        closestObject = platformsRef.current[i];
+                        closestObjectDistance = distance
+                    }
+                }
+                const distance = Math.abs(boxRef.current.position.x - getActualPlatformX(closestObject))
+                console.log(distance)
+                if(distance > 12 / 2){
+                    if(!jumpRef.current.isJumping){
+                        fallRef.current.isFalling = true;
+                    }
+                }
+
+
             }
         }
     });

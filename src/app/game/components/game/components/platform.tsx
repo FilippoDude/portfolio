@@ -1,3 +1,4 @@
+import { PlatformType, useGame } from "@/app/game/hooks/gameContext";
 import { useFrame } from "@react-three/fiber"
 import { useEffect, useRef, useState } from "react"
 /*older code
@@ -30,25 +31,21 @@ import { useEffect, useRef, useState } from "react"
     });
 
 */
-interface platformType{
-    positionX: number,
-    additionalGap: number,
-    backGap: number,
-    color: string
-}
 const colors = ['#FF5733', '#33FF57', '#3357FF', '#F9C80E', '#9C27B0'];
 const Platform = () => {
-    const [platforms, setPlatforms] = useState<platformType[]>([]);
-    const platformsRef = useRef<platformType[]>([]);
+    const {platformsRef, isPaused} = useGame()
+    const [platforms, setPlatforms] = useState<PlatformType[]>([]);
     const accumulatedGap = useRef<number>(0);
     const PLATFORM_SIZE = 12;
     const lastIndexRef = useRef<number>(0);
 
     useEffect(() => {
-        const initial: platformType[] = [];
+        const initial:PlatformType[] = [];
         for (let i = 0; i < 3; i++) {
             initial.push({
-                positionX: i * PLATFORM_SIZE,
+                y: -1,
+                x: i * PLATFORM_SIZE,
+                height: 2,
                 additionalGap: 0,
                 color: colors[i % colors.length],
                 backGap: 0
@@ -60,20 +57,23 @@ const Platform = () => {
     }, []);
 
     useFrame((state) => {
+        if(isPaused) return;
+
         const cameraX = state.camera.position.x;
         if (platformsRef.current.length < 3) return;
         const nextPlatform = platformsRef.current[1];
-        const nextX = nextPlatform.positionX + nextPlatform.additionalGap + nextPlatform.backGap;
+        const nextX = nextPlatform.x + nextPlatform.additionalGap + nextPlatform.backGap;
         if (cameraX > nextX + PLATFORM_SIZE / 2) {
             platformsRef.current.shift();
             lastIndexRef.current += 1;
-            const backGap = Math.floor(Math.random() * 3);
-            const additionalGap = platformsRef.current[1].backGap + backGap;
+            const backGap = Math.floor(Math.random() * 2 + 1);
             accumulatedGap.current += backGap;
-            const newPlatform: platformType = {
-                positionX: lastIndexRef.current * PLATFORM_SIZE,
-                additionalGap: accumulatedGap.current + additionalGap,
-                backGap: backGap,
+            const newPlatform: PlatformType = {
+                y: -1,
+                x: lastIndexRef.current * PLATFORM_SIZE,
+                height: 2,
+                additionalGap: accumulatedGap.current,
+                backGap,
                 color: colors[lastIndexRef.current % colors.length]
             };
             platformsRef.current.push(newPlatform);
@@ -81,19 +81,19 @@ const Platform = () => {
         }
     });
 
-
     const elementsRef = useRef<string[]>([])
     useEffect(() => {
         for (let i = 0; i < 5; i++) {
             elementsRef.current.push("1");
         }
     },[])
+
     return (<>
 
             {platforms.map((el, i) => {
-                console.log(`Render platform ${i} at: ${el.positionX + el.additionalGap + el.backGap}`);
-                return <mesh key={i} position={[el.positionX + el.additionalGap + el.backGap,-1,0]} rotation={[0,0,0]}>
-                    <boxGeometry args={[12,2,2]} />
+                console.log(`Render platform ${i} at: ${el.x + el.additionalGap + el.backGap}`);
+                return <mesh key={i} position={[el.x + el.additionalGap + el.backGap,el.y,0]} rotation={[0,0,0]}>
+                    <boxGeometry args={[12,el.height,2]} />
                     <meshStandardMaterial color={el.color}/>
                 </mesh>
             })}
