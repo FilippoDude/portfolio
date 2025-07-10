@@ -55,7 +55,7 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
             state.camera.position.x = boxRef.current.position.x
             if(jumpRef.current.isJumping){
                 const jumpHeight = 2;
-                const speed = 2;
+                const speed = 8;
                 const baseY = jumpRef.current.startY ?? (jumpRef.current.startY = boxRef.current.position.y);
                 jumpRef.current.angle = (jumpRef.current.angle + delta * speed) % (2 * Math.PI);
                 boxRef.current.position.y = baseY + Math.sin(jumpRef.current.angle) * jumpHeight;
@@ -84,7 +84,6 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                     }
                 }
                 const distance = Math.abs(boxRef.current.position.x - getActualPlatformX(closestObject)) - 0.5
-                console.log(distance)
                 if(distance > 12 / 2){
                     if(!jumpRef.current.isJumping){
                         fallRef.current.isFalling = true;

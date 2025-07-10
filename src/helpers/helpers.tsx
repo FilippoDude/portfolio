@@ -9,5 +9,5 @@ export function assignRef<T>(ref: React.Ref<T> | undefined, value: T) {
 }
 
 export function getActualPlatformX(platform: PlatformType): number{
-  return platform.x + platform.backGap + platform.additionalGap
+  return platform.x + platform.additionalGap
 }

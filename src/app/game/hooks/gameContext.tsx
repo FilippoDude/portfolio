@@ -25,7 +25,9 @@ type GameContextType = {
     restartGame: () => void,
     pauseGame: () => void,
     totalPlatforms: number,
-    addPlatform: () => void
+    addPlatform: () => void,
+    showDebug: boolean,
+    toggleDebug: () => void
 }
 const GameContext = createContext<GameContextType | undefined>(undefined)
 
@@ -34,6 +36,7 @@ export const GameProvider = ({children} : {children: React.ReactNode}) => {
     const [cameraPosition, setCameraPosition] = useState<PositionType>({x: 0, y: 0, z: 10})
     const platformsRef = useRef<PlatformType[]>([]);
     const [totalPlatforms, setTotalPlatforms] = useState<number>(0)
+    const [showDebug, setShowDebug] = useState<boolean>(false)
 
     const movingBoxRef = useRef<movingBoxInterface | null>(null)
     const platformRef = useRef<platformInterface | null>(null)
@@ -73,6 +76,10 @@ export const GameProvider = ({children} : {children: React.ReactNode}) => {
     function addPlatform(){
         setTotalPlatforms(tot => tot + 1)
     }
+    
+    function toggleDebug(){
+        setShowDebug(prev => !prev)
+    }
 
     return(
         <GameContext.Provider value={{
@@ -87,7 +94,9 @@ export const GameProvider = ({children} : {children: React.ReactNode}) => {
                 restartGame: restartGame,
                 pauseGame: pauseGame,
                 totalPlatforms: totalPlatforms,
-                addPlatform: addPlatform
+                addPlatform: addPlatform,
+                showDebug: showDebug,
+                toggleDebug: toggleDebug
             }}>
             {children}
         </GameContext.Provider >

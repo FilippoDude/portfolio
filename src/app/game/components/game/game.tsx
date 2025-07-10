@@ -8,7 +8,7 @@ import Platform, { platformInterface } from "./components/platform"
 function GameCanvas () {
     const unPauseButtonRef = useRef<HTMLButtonElement | null>(null)
     const restartButtonRef = useRef<HTMLButtonElement | null>(null)
-    const {movingBoxRef, platformRef, cameraPosition, gameStatus, unPauseGame, restartGame, pauseGame, totalPlatforms} = useGame()
+    const {movingBoxRef, platformRef, cameraPosition, gameStatus, unPauseGame, restartGame, pauseGame, totalPlatforms, showDebug, toggleDebug} = useGame()
 
     const onClick = () => {
         if(movingBoxRef.current != null){
@@ -44,6 +44,7 @@ function GameCanvas () {
                 <div className="absolute w-full h-full bg-[#89B0EDAA] z-10 backdrop-blur-sm flex items-center justify-center flex-col gap-2">
                     <button ref={unPauseButtonRef} onClick={unPauseGame} className="px-4 py-2 rounded-2xl font-bold text-2xl text-white bg-amber-600 cursor-pointer">Resume</button>
                     <button ref={restartButtonRef} onClick={restartGame} className="px-4 py-2 rounded-2xl font-bold text-2xl text-white bg-red-600 cursor-pointer">Restart</button>
+                    <button onClick={toggleDebug} className={"px-4 py-2 rounded-2xl font-bold text-xl text-white cursor-pointer " + (showDebug ? "bg-green-600" : "bg-red-600") }>Show debug: {showDebug ? "Yes" : "No"}</button>
                 </div>
             : gameStatus == "gameover" ? 
                 <div className="absolute w-full h-full bg-[#89B0EDAA] z-10 backdrop-blur-sm flex items-center justify-center">

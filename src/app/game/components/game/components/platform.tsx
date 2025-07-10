@@ -36,7 +36,7 @@ export interface platformInterface {
     restart: () => void
 }
 const Platform = forwardRef<platformInterface>((props, ref) => {
-    const {platformsRef, gameStatus, totalPlatforms, addPlatform} = useGame()
+    const {platformsRef, gameStatus, totalPlatforms, addPlatform, showDebug} = useGame()
     const [platforms, setPlatforms] = useState<PlatformType[]>([]);
     const accumulatedGap = useRef<number>(0);
     const PLATFORM_SIZE = 12;
@@ -73,7 +73,7 @@ const Platform = forwardRef<platformInterface>((props, ref) => {
         if (cameraX > nextX + PLATFORM_SIZE / 2) {
             platformsRef.current.shift();
             lastIndexRef.current += 1;
-            const backGap = Math.floor(Math.random() * 2 + 1);
+            const backGap = Math.floor(Math.random() * 2 + 1) + 0.5;
             accumulatedGap.current += backGap;
             const newPlatform: PlatformType = {
                 y: -1,
@@ -103,13 +103,13 @@ const Platform = forwardRef<platformInterface>((props, ref) => {
     return (<>
 
             {platforms.map((el, i) => {
-                console.log(`Render platform ${i} at: ${el.x + el.additionalGap + el.backGap}`);
-                return <mesh key={i} position={[el.x + el.additionalGap + el.backGap,el.y,0]} rotation={[0,0,0]}>
-                    <boxGeometry args={[12,el.height,2]} />
+                console.log(`Render platform ${i} at: ${el.x + el.additionalGap}`);
+                return <mesh key={i} position={[el.x + el.additionalGap,el.y,0]} rotation={[0,0,0]}>
+                    <boxGeometry args={[12,el.height,0]} />
                     <meshStandardMaterial color={el.color}/>
                 </mesh>
             })}
-            {   
+            {showDebug &&
                 elementsRef.current.map((item, index) => (
                     <mesh key={index} position={[index * 12,-1,0]} rotation={[0,0,0]}>
                         <boxGeometry args={[1,8,2]} />
@@ -117,6 +117,16 @@ const Platform = forwardRef<platformInterface>((props, ref) => {
                     </mesh>
                 ))
             }
+            {showDebug &&
+            platforms.map((el, i) => {
+                const platformX = el.x + el.additionalGap;
+                const blackBoxX = platformX - el.backGap / 2;
+                console.log(`Render platform ${i} at: ${el.x + el.additionalGap}`);
+                return <mesh key={i} position={[blackBoxX - 6,-1,0]} rotation={[0,0,0]}>
+                    <boxGeometry args={[el.backGap,8,2]} />
+                    <meshStandardMaterial color={"#000000"} transparent={true} opacity={0.5}/>
+                </mesh>
+            })}
         </>
     )
 })
