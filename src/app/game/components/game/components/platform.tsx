@@ -1,6 +1,6 @@
 import { PlatformType, useGame } from "@/app/game/hooks/gameContext";
 import { useFrame } from "@react-three/fiber"
-import { useEffect, useRef, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 /*older code
     const [platforms, setPlatforms] = useState<platformType[]>([])
     const accumulatedGap = useRef<number>(0)
@@ -32,14 +32,19 @@ import { useEffect, useRef, useState } from "react"
 
 */
 const colors = ['#FF5733', '#33FF57', '#3357FF', '#F9C80E', '#9C27B0'];
-const Platform = () => {
-    const {platformsRef, isPaused} = useGame()
+export interface platformInterface {
+    restart: () => void
+}
+const Platform = forwardRef<platformInterface>((props, ref) => {
+    const {platformsRef, gameStatus, totalPlatforms, addPlatform} = useGame()
     const [platforms, setPlatforms] = useState<PlatformType[]>([]);
     const accumulatedGap = useRef<number>(0);
     const PLATFORM_SIZE = 12;
     const lastIndexRef = useRef<number>(0);
 
-    useEffect(() => {
+    function restart(){
+        accumulatedGap.current = 0
+        lastIndexRef.current = 0
         const initial:PlatformType[] = [];
         for (let i = 0; i < 3; i++) {
             initial.push({
@@ -54,11 +59,13 @@ const Platform = () => {
         platformsRef.current = initial;
         setPlatforms(initial);
         lastIndexRef.current = 2;
+    }
+    useEffect(() => {
+        restart()
     }, []);
 
     useFrame((state) => {
-        if(isPaused) return;
-
+        if(gameStatus != "running")  return;
         const cameraX = state.camera.position.x;
         if (platformsRef.current.length < 3) return;
         const nextPlatform = platformsRef.current[1];
@@ -78,6 +85,7 @@ const Platform = () => {
             };
             platformsRef.current.push(newPlatform);
             setPlatforms([...platformsRef.current]);
+            addPlatform()
         }
     });
 
@@ -87,6 +95,10 @@ const Platform = () => {
             elementsRef.current.push("1");
         }
     },[])
+
+    useImperativeHandle(ref, () => ({
+        restart
+    }))
 
     return (<>
 
@@ -107,6 +119,6 @@ const Platform = () => {
             }
         </>
     )
-}
+})
 
 export default Platform

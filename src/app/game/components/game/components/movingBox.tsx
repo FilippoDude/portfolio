@@ -6,10 +6,11 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { Mesh } from "three";
 
 export interface movingBoxInterface {
-    setToJump: () => void
+    setToJump: () => void,
+    restart: () => void
 }
 const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
-    const {isPaused, platformsRef} = useGame()
+    const {gameStatus, platformsRef, endGame, totalPlatforms} = useGame()
     const boxRef = useRef<Mesh | null>(null)
     const jumpRef = useRef({
         isJumping: false,
@@ -26,6 +27,14 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
         }
     }
 
+    function restart(){
+        if(!boxRef.current) return
+        boxRef.current.position.x = 0
+        boxRef.current.position.y = 0.5
+        jumpRef.current.isJumping = false;
+        fallRef.current.isFalling = false;
+    }
+
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.code === "Space") {
@@ -39,10 +48,10 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
     }, [])
 
     useFrame((state, delta) => {
-        if(isPaused) return;
+        if(gameStatus != "running") return;
 
         if(boxRef.current != null){ // Don't forget that delta exists
-            boxRef.current.position.x += delta * 2;
+            if(!fallRef.current.isFalling) boxRef.current.position.x += delta * 4 + (totalPlatforms / 100);
             state.camera.position.x = boxRef.current.position.x
             if(jumpRef.current.isJumping){
                 const jumpHeight = 2;
@@ -56,7 +65,14 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                     jumpRef.current.angle = 0
                 }
             }
-            if(fallRef.current.isFalling)
+
+            if(fallRef.current.isFalling){
+                boxRef.current.position.y -= delta * 6;
+                if(boxRef.current.position.y < - 5){
+                    endGame()
+                }
+            }
+
             if(!fallRef.current.isFalling && platformsRef.current.length > 0){
                 let closestObject = platformsRef.current[0]
                 let closestObjectDistance = Math.abs(getActualPlatformX(platformsRef.current[0]) - boxRef.current.position.x)
@@ -67,21 +83,20 @@ const MovingBox = forwardRef<movingBoxInterface>((props, ref) => {
                         closestObjectDistance = distance
                     }
                 }
-                const distance = Math.abs(boxRef.current.position.x - getActualPlatformX(closestObject))
+                const distance = Math.abs(boxRef.current.position.x - getActualPlatformX(closestObject)) - 0.5
                 console.log(distance)
                 if(distance > 12 / 2){
                     if(!jumpRef.current.isJumping){
                         fallRef.current.isFalling = true;
                     }
                 }
-
-
             }
         }
     });
 
     useImperativeHandle(ref, ()=> ({
-        setToJump
+        setToJump,
+        restart
     }))
 
     return(            
