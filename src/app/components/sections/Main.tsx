@@ -8,6 +8,7 @@ import { CustomBounce } from "gsap/CustomBounce";
 import { CustomWiggle } from "gsap/CustomWiggle";
 import Timeline from "../Timeline";
 import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
+import Laptop3d from "../Laptop3d";
 
 gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle);
 
@@ -79,7 +80,6 @@ const MainSection = ({skillsSectionRef, aboutmeRef}: {skillsSectionRef: React.Re
     return(
         <main ref={ref} className={`min-h-180 h-screen w-screen flex items-center justify-center flex-row relative gap-10`}>
             <div className={`h-fit z-10 px-10 xl:pl-0 transition-all duration-1000 ease-in-out transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-
                 <div className="relative">
                     <h1 ref={titleRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
                     <h1 ref={titleBlurRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
