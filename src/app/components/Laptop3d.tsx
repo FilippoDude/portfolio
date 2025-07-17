@@ -1,7 +1,7 @@
-import gsap from "gsap"
-import three, { Canvas } from '@react-three/fiber'
+
+import { Canvas } from '@react-three/fiber'
 import { Mesh } from "three"
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 function Model({ url }: {url: string}) {
   const { scene } = useGLTF(url);
@@ -33,7 +33,6 @@ const Laptop3d = () => {
                 <boxGeometry args={[2, 1, 1]}/>
                 <meshStandardMaterial color="#4E3000" />
             </mesh>
-            <OrbitControls/>
         </Canvas>
     )
 }

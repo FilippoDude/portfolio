@@ -8,7 +8,6 @@ import { CustomBounce } from "gsap/CustomBounce";
 import { CustomWiggle } from "gsap/CustomWiggle";
 import Timeline from "../Timeline";
 import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
-import Laptop3d from "../Laptop3d";
 
 gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle);
 
