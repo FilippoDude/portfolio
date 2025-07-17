@@ -22,10 +22,10 @@ export default function Home() {
           </div>
       </section>
       <section ref={aboutmeSectionRef} className="relative min-h-180 w-full h-fit md:h-screen overflow-hidden bg-[#17192A] flex flex-row items-center justify-center gap-120">
-          <div className="w-full h-full absolute ">
+          <div className="blur-[8px] w-full h-full absolute ">
               <Laptop3d/>
           </div>
-          <div className="px-10 py-10 rounded-2xl flex flex-col w-225 ">
+          <div className=" px-10 py-10 rounded-2xl flex flex-col w-225 z-10">
               <h1 className="font-raleway-sans text-6xl font-black text-white">About me</h1>
               <p className="text-xl mt-2 opacity-80 font-sans text-white">Hi, I&apos;m a developer based in Italy that focuses mainly on web and app development. I also like to try out new stuff that are not related to these two like making scrapers or Telegram bots or cool stuff that come to my mind.</p>
               <div className="w-10/12 mt-2 h-0.5 bg-white opacity-60 rounded-2xl"></div>
