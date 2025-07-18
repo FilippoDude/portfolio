@@ -6,6 +6,7 @@ import Link from "next/link";
 type NavigationButtonType = {name: string, link: string, customLink: boolean };
 const navigationButtons : NavigationButtonType[] = [
     {name: "Home", link: "/", customLink: false},
+    {name: "Cooler 3d Portfolio (W.I.P)", link: "/cool", customLink: false},
     {name: "Widgets Crate", link: "https://widgetscrate.filippodude.cc/download", customLink: true},
     {name: "3D Demo", link: "/game", customLink: false},
 
