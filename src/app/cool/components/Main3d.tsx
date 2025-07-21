@@ -74,40 +74,40 @@ const Model = () => {
 
     useFrame((state, delta) => {
         if(monitorRef.current)console.log(delta)
-        if(monitorRef.current)
+        if(monitorRef.current && laptopModelRef.current){
         
             if(phaseRef.current == 0){
-                //monitorRef.current.position.y = approachValueBy(0.001*delta*100, monitorRef.current.position.y, 0.0132)
-                monitorRef.current.position.y =  0.0132
-                //monitorRef.current.position.z = -0.001
-                monitorRef.current.position.z = approachValueBy(0.001*delta*100, monitorRef.current.position.z, -0.001)
-                //monitorRef.current.rotation.x = -1.58
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, -1.58)
             } else if(phaseRef.current == 1){
-                //monitorRef.current.position.y =  0.01
-                monitorRef.current.position.y = approachValueBy(0.0002*delta*100, monitorRef.current.position.y, 0.01)
-                //monitorRef.current.rotation.x = -1.2
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, -1.2)
             } else if(phaseRef.current == 2){
-                //monitorRef.current.position.y =  0.005
-                monitorRef.current.position.y = approachValueBy(0.0002*delta*100, monitorRef.current.position.y, 0.005)
-                //monitorRef.current.rotation.x = -0.8
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, -0.8)
             } else if(phaseRef.current == 3){
-                //monitorRef.current.position.y = 0.000
-                monitorRef.current.position.y = approachValueBy(0.1*delta*100, monitorRef.current.position.y, 0.000)
-                //monitorRef.current.rotation.x = -0.4
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, -0.4)
             } else if(phaseRef.current == 4){
-                monitorRef.current.position.y = 0
-                //monitorRef.current.position.y = approachValueBy(0.01*delta*100, monitorRef.current.position.y, 0)
-                //monitorRef.current.rotation.x = 0
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, 0)
+
+            } else if(phaseRef.current == 5){
+                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.5)
+            } else if(phaseRef.current == 6){
+                laptopModelRef.current.rotation.x  = approachValueBy(0.01*delta*100, laptopModelRef.current.rotation.x, 0.5)    
             }
+
+            if(phaseRef.current < 5){
+                state.camera.position.z  = approachValueBy(0.01*delta*100, state.camera.position.z, -2)
+            } else {
+                monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, 0)
+                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.5)
+            }
+        }
     })
     return <primitive ref={laptopModelRef} shadows position={[-0.18,-0.1,-1]} rotation={[0,0,0]} object={clonedScene} />;
 
 }
+
+//18.2116 cm
+//0.419035 cm
+//1.09998 cm
 const Main3d = () => {
 
     return(
