@@ -1,9 +1,8 @@
 'use client'
-import { OrbitControls, useGLTF, useHelper } from "@react-three/drei"
+import { useGLTF } from "@react-three/drei"
 import { Canvas, useFrame } from "@react-three/fiber"
-import { useEffect, useMemo, useRef, useState } from "react";
-import { BoxGeometry, Mesh, Object3D, SpotLight } from "three";
-import { SpotLightHelper } from "three";
+import { useEffect, useMemo, useRef} from "react";
+import { Mesh, Object3D, SpotLight } from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { useCoolPage } from "../hooks/coolPageContext";
 
@@ -18,9 +17,14 @@ function SpotLightWithHelper({spotlightStatus} : {spotlightStatus: React.RefObje
     }, []);
 
     useFrame(() => {
-        if(spotlightStatus.current)
+        if(spotlightStatus.current){
             lightRef.current.position.z = -1.25
-        else lightRef.current.position.z = -10
+            targetRef.current.position.set(0, 0.1, -1.13);
+            lightRef.current.target = targetRef.current;
+            lightRef.current.target.updateMatrixWorld();
+        } else {
+            lightRef.current.position.z = -20
+        }
     })
 
     return (
@@ -96,10 +100,16 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
                 monitorRef.current.rotation.x = approachValueBy(0.01*delta*100, monitorRef.current.rotation.x, 0)
 
             } else if(phaseRef.current == 5){
-                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.5)
+                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.5) 
             } else if(phaseRef.current >= 6){
-                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.1) 
+                state.camera.position.z = approachValueBy(0.01*delta*100, state.camera.position.z, -1.1)
+                state.camera.position.y = approachValueBy(0.01*delta*100, state.camera.position.y, 0.01)  
             }
+
+            if(phaseRef.current <= 5){
+                state.camera.position.y = approachValueBy(0.01*delta*100, state.camera.position.y, 0) 
+            }
+
             if(phaseRef.current < 5){
                 state.camera.position.z  = approachValueBy(0.01*delta*100, state.camera.position.z, -2)
                 spotlightStatus.current = true
@@ -133,11 +143,10 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
 //1.09998 cm
 const Main3d = () => {
     const spotlightStatus = useRef<boolean>(true)
-
+    //0.24
     return(
         <Canvas className="w-full h-full" camera={{position: [0,0,-2], fov:35}}>
             <ambientLight intensity={5}/>
-            <OrbitControls/>
             <Model spotlightStatus={spotlightStatus}/>
             <SpotLightWithHelper spotlightStatus={spotlightStatus}/>
             <mesh position={[0,-0.196,-1]}>

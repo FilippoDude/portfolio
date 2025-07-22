@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react";
-import Main from "./components/sections/main"
+import Intro from "./components/sections/intro"
+import Main from "./components/sections/main";
 import { CoolPageProvider, useCoolPage } from "./hooks/coolPageContext";
+
 const CoolerPortoflio = () => {
   return (
     <CoolPageProvider>
@@ -12,12 +13,12 @@ const CoolerPortoflio = () => {
 
 const CoolerPortoflioContent = () => {
   const { hasFinishedIntro } = useCoolPage();
-
+  
   return (
-    <div className="min-h-screen max-w-screen flex flex-col bg-[#0F101B]">
-      <Main />
+    <div className="min-h-400 max-w-screen flex flex-col bg-[#0F101B]">
+      <Intro />
       {hasFinishedIntro ? (
-        <div className="h-200 bg-[#0F101B] w-full relative"></div>
+        <Main/>
       ) : null}
     </div>
   );
