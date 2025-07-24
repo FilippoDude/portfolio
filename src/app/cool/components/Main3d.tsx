@@ -1,5 +1,5 @@
 'use client'
-import { OrbitControls, useGLTF } from "@react-three/drei"
+import {useGLTF } from "@react-three/drei"
 import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { useEffect, useMemo, useRef} from "react";
 import { LinearFilter, LinearMipMapLinearFilter, Mesh, MeshStandardMaterial, Object3D, SpotLight } from "three";
