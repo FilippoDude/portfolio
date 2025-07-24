@@ -1,13 +1,16 @@
 'use client'
-import { useEffect, useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 import gsap from "gsap"
 import { RoughEase, ExpoScaleEase, SlowMo } from "gsap/EasePack";
 import { CustomEase } from "gsap/CustomEase";
 import { CustomBounce } from "gsap/CustomBounce";
 import { CustomWiggle } from "gsap/CustomWiggle";
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { SplitText } from "gsap/all";
+import { ScrollTrigger } from "gsap/all";
+import Particles from "../Particles";
 
-gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle, ScrollToPlugin);
+gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle, ScrollToPlugin, SplitText, ScrollTrigger);
 const Main = () => {
     const containerRef = useRef<HTMLDivElement | null>(null)
     const hiderRef = useRef<HTMLDivElement | null>(null)
@@ -28,7 +31,7 @@ const Main = () => {
                 wiggles:10,
                 type:"easeInOut"
                 }),
-                opacity: 1
+                color: "#FFFFFF"
             })
             gsap.from(titleBlurRef.current, {
                 duration:1,
@@ -36,21 +39,33 @@ const Main = () => {
                 wiggles:10,
                 type:"easeInOut"
                 }),
-                color: "#FFFFFF"
+                opacity: 1
             })
-            gsap.to(window, {duration: 2, scrollTo: titleRef.current})
+            gsap.to(window, {duration: 2, scrollTo: {y: titleRef.current}})
         }
+
     }, [])
+
 
     return(
         <>
             <div ref={hiderRef} className="absolute top-0 w-full h-375 bg-[#0F101B] z-10"></div>
-            <div ref={containerRef} className="h-screen bg-[#0F101B] w-full z-50 mt-375 flex items-center justify-center flex-col">
-                <div className="relative flex items-center justify-center">
-                    <h1 ref={titleRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
-                    <h1 ref={titleBlurRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
+            <div ref={containerRef} className="mt-375 h-400 relative w-full">
+                <div className="top-0 sticky h-screen bg-[#0F101B] w-full z-50 flex items-center justify-center flex-col">
+                    <div className="absolute top-0 left-0 w-full h-full">
+                        <Particles/>
+                    </div>
+                    <div className="relative flex items-center justify-center">
+                        <h1 ref={titleBlurRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
+                        <h1 ref={titleRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
+                    </div>
+                    <h1 className="mt-6 select-none text-center text-3xl font-raleway-sans font-bold text-white opacity-100">
+                        <span className="text-green-200 block">
+                            Website and model made by me using <br />
+                            threejs and Blender
+                        </span>
+                    </h1>
                 </div>
-                <h1 className="mt-4 select-none text-center sm:text-left text-3xl sm:text-5xl font-raleway-sans font-bold text-white opacity-100"> <span className="text-green-200 text-center ">Website and model made by me<br/> (using threejs and Blender)</span></h1>
             </div>
         </>
     )
