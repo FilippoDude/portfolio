@@ -1,8 +1,8 @@
 'use client'
-import { useGLTF } from "@react-three/drei"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { OrbitControls, useGLTF } from "@react-three/drei"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { useEffect, useMemo, useRef} from "react";
-import { Mesh, Object3D, SpotLight } from "three";
+import { LinearFilter, LinearMipMapLinearFilter, Mesh, MeshStandardMaterial, Object3D, SpotLight } from "three";
 import { clone } from "three/examples/jsm/utils/SkeletonUtils.js";
 import { useCoolPage } from "../hooks/coolPageContext";
 
@@ -51,6 +51,23 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
             child.receiveShadow = true;
         }
     });
+    const { gl } = useThree()
+      useEffect(() => {
+        clonedScene.traverse((child) => {
+        if ((child as Mesh).isMesh) {
+            const mesh = child as Mesh
+            const material = mesh.material as MeshStandardMaterial
+
+            if (material.map) {
+                const texture = material.map
+                texture.anisotropy = gl.capabilities.getMaxAnisotropy()
+                texture.minFilter = LinearMipMapLinearFilter
+                texture.magFilter = LinearFilter
+                texture.needsUpdate = true
+            }
+        }
+        })
+    }, [scene, gl])
 
     const laptopModelRef = useRef<Mesh | null>(null)
     const monitorRef = useRef<Mesh | null>(null)
@@ -130,6 +147,7 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
                     toggleHasFinishedIntro()
                 }   
             }
+
         }
     })
     return <primitive ref={laptopModelRef} shadows position={[-0.18,-0.1,-1]} rotation={[0,0,0]} object={clonedScene} />;
@@ -151,6 +169,7 @@ const Main3d = () => {
                 <boxGeometry args={[2,0.2,1]}/>
                 <meshStandardMaterial color={"#000000"}/>
             </mesh>
+            <OrbitControls/>
         </Canvas>
     )
 }

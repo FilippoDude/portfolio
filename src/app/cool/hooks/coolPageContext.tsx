@@ -9,7 +9,7 @@ interface CoolPageContextType {
 const CoolPageContext = createContext<CoolPageContextType | undefined>(undefined)
 
 export const CoolPageProvider = ({children} : {children: React.ReactNode}) => {
-    const [hasFinishedIntro, setHasFinishedIntro] = useState<boolean>(true)
+    const [hasFinishedIntro, setHasFinishedIntro] = useState<boolean>(false)
 
     const toggleHasFinishedIntro = () => {
         setHasFinishedIntro(prev => !prev)
