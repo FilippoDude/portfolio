@@ -169,7 +169,6 @@ const Main3d = () => {
                 <boxGeometry args={[2,0.2,1]}/>
                 <meshStandardMaterial color={"#000000"}/>
             </mesh>
-            <OrbitControls/>
         </Canvas>
     )
 }
