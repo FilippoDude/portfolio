@@ -38,7 +38,6 @@ const Main = () => {
                 }),
                 color: "#FFFFFF"
             })
-            console.log("HEY!")
             gsap.to(window, {duration: 2, scrollTo: titleRef.current})
         }
     }, [])
@@ -51,7 +50,7 @@ const Main = () => {
                     <h1 ref={titleRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
                     <h1 ref={titleBlurRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
                 </div>
-                <h1 className="mt-4 select-none text-center sm:text-left text-3xl sm:text-5xl font-raleway-sans font-bold text-white opacity-100"> <span className="text-green-300">Web</span></h1>
+                <h1 className="mt-4 select-none text-center sm:text-left text-3xl sm:text-5xl font-raleway-sans font-bold text-white opacity-100"> <span className="text-green-200 text-center ">Website and model made by me<br/> (using threejs and Blender)</span></h1>
             </div>
         </>
     )
