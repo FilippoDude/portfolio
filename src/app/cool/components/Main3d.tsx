@@ -85,7 +85,6 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
     }
 
     useFrame((state, delta) => {
-        if(monitorRef.current)console.log(delta)
         if(monitorRef.current && laptopModelRef.current){
         
             if(phaseRef.current == 0){
@@ -131,7 +130,6 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
                     toggleHasFinishedIntro()
                 }   
             }
-            console.log(phaseRef.current)
         }
     })
     return <primitive ref={laptopModelRef} shadows position={[-0.18,-0.1,-1]} rotation={[0,0,0]} object={clonedScene} />;
