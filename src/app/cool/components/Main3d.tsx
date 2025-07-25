@@ -81,7 +81,7 @@ const Model = ({spotlightStatus} : {spotlightStatus: React.RefObject<boolean>}) 
     useEffect(() => {
         function onScroll(){
             if(monitorRef.current)
-                phaseRef.current = Math.floor(window.scrollY / 200)
+                phaseRef.current = Math.floor(window.scrollY / (window.innerHeight / 4))
         }
         onScroll()
         window.addEventListener('scroll', onScroll)

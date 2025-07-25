@@ -48,9 +48,10 @@ const Main = () => {
 
 
     return(
-        <>
-            <div ref={hiderRef} className="absolute top-0 w-full h-375 bg-[#0F101B] z-10"></div>
-            <div ref={containerRef} className="mt-375 h-400 relative w-full">
+        <div className="absolute top-0 flex flex-col w-full h-fit">
+            <div className="h-[calc(100vh*3-100vh)] relative w-full"></div>
+            <div ref={hiderRef} className="absolute mt-[calc(100vh*3-200vh)] top-0 w-full h-[100vh] bg-[#0F101B] z-10"></div>
+            <div ref={containerRef} className="h-400 relative w-full">
                 <div className="top-0 sticky h-screen bg-[#0F101B] w-full z-50 flex items-center justify-center flex-col">
                     <div className="absolute top-0 left-0 w-full h-full">
                         <Particles/>
@@ -67,7 +68,7 @@ const Main = () => {
                     </h1>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
