@@ -9,6 +9,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { SplitText } from "gsap/all";
 import { ScrollTrigger } from "gsap/all";
 import Particles from "../Particles";
+import RotatingText from "../RotatingText";
 
 gsap.registerPlugin(RoughEase,ExpoScaleEase,SlowMo,CustomEase,CustomBounce,CustomWiggle, ScrollToPlugin, SplitText, ScrollTrigger);
 const Main = () => {
@@ -60,12 +61,29 @@ const Main = () => {
                         <h1 ref={titleBlurRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
                         <h1 ref={titleRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
                     </div>
-                    <h1 className="mt-6 select-none text-center text-3xl font-raleway-sans font-bold text-white opacity-100">
+                    {/*<h1 className="mt-6 select-none text-center text-3xl font-raleway-sans font-bold text-white opacity-100">
                         <span className="text-green-200 block">
                             Website and model made by me using <br />
                             threejs and Blender
                         </span>
                     </h1>
+                    */}
+                    <div className="flex flex-row items-center gap-2">
+                        <RotatingText
+                            texts={['Web', 'Mobile', 'Bot', 'Scraper']}
+                            mainClassName="text-4xl font-bold text-white overflow-hidden justify-center"
+                            staggerFrom={"last"}
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "-120%" }}
+                            staggerDuration={0.025}
+                            splitLevelClassName="overflow-hidden"
+                            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                            rotationInterval={2000}
+                        />
+                        <p className="font-raleway-sans text-4xl text-white font-medium mt-2">developer</p>
+                    </div>
+                    <p className="font-bold text-white w-100 text-center opacity-50">Website and laptop 3d model made by me using React, Blender, Threejs, ReactBits and Gsap.</p>
                 </div>
             </div>
         </div>
