@@ -1,10 +1,11 @@
 name: portfolio
 services:
-  image: node
-  wordking_dir: /
-  restart: always
-  ports:
-    - "${WEBSITE_PORT}:3000"
-  volumes:
-    - ./:/
-  entrypoint: ["sh", "-c", "chmod +x ./entrypoint.sh && ./entrypoint.sh"]
+  website:
+    image: node
+    wordking_dir: /
+    restart: always
+    ports:
+      - "${WEBSITE_PORT}:3000"
+    volumes:
+      - ./:/
+    entrypoint: ["sh", "-c", "chmod +x ./entrypoint.sh && ./entrypoint.sh"]
