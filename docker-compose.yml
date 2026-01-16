@@ -6,4 +6,6 @@ services:
     restart: always
     ports:
       - "${WEBSITE_PORT}:3000"
+    volumes:
+      - ./:/
     entrypoint: ["sh", "-c", "chmod +x ./entrypoint.sh && ./entrypoint.sh"]
