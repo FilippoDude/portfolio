@@ -5,9 +5,4 @@ services:
   restart: always
   ports:
     - "${WEBSITE_PORT}:3000"
-  entrypoint:
-    [
-      "sh",
-      "-c",
-      "echo 'PWD='$(pwd) && echo 'chmod +x ./entrypoint.sh && ./entrypoint.sh",
-    ]
+  entrypoint: ["sh", "-c", "chmod +x ./entrypoint.sh && ./entrypoint.sh"]
