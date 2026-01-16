@@ -1,14 +1,13 @@
 name: portfolio
 services:
+  image: node
+  wordking_dir: /
+  restart: always
   ports:
-    image: node
-    wordking_dir: /
-    restart: always
-    ports:
-      - ${WEBSITE_PORT}:3000
-    entrypoint:
-      [
-        "sh",
-        "-c",
-        "echo 'PWD='$(pwd) && echo 'chmod +x ./entrypoint.sh && ./entrypoint.sh",
-      ]
+    - "${WEBSITE_PORT}:3000"
+  entrypoint:
+    [
+      "sh",
+      "-c",
+      "echo 'PWD='$(pwd) && echo 'chmod +x ./entrypoint.sh && ./entrypoint.sh",
+    ]
