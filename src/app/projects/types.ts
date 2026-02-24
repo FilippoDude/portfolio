@@ -3,4 +3,6 @@ export interface Project {
   description: string;
   backgroundImage: string;
   innerPage: React.ReactNode;
+  github?: string;
+  latestGithubCommit?: Date;
 }
