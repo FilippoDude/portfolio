@@ -136,7 +136,7 @@ const MainSection = ({
                 onClick={scrollToSkills}
                 className="group cursor-pointer text-[#D87B26]"
               >
-                skills
+                coding skills
                 <div className="group-hover:w-full h-0.5 w-0 bg-[#D87B26] duration-100"></div>
               </button>
               <span className="opacity-80">, and my </span>
@@ -194,7 +194,7 @@ const MainSection = ({
             </button>
           </div>
 
-          <button
+          {/*<button
             onClick={showTimelineClick}
             className="xl:hidden relative mt-2 font-sans font-bold text-2xl bg-[#17192A] text-white px-4 h-16 rounded-2xl duration-200 hover:opacity-90 cursor-grab opacity-50"
           >
@@ -206,7 +206,7 @@ const MainSection = ({
               width={30}
               height={0}
             ></Image>
-          </button>
+          </button>*/}
         </div>
       </div>
 

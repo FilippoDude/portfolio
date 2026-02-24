@@ -32,7 +32,7 @@ const SkillsSection = ({
       className="relative min-h-180 h-fit py-20 xl:py-0 xl:h-screen w-screen overflow-hidden flex justify-center items-center  bg-[#131522] z-10"
     >
       <h1 className="absolute z-0 text-white opacity-75 font-black font-raleway-sans italic text-[32rem]">
-        SKILLS
+        PROGRAMMING
       </h1>
       <div className="relative z-1 w-10/12 h-fit py-20 xl:py-0 xl:h-10/12 bg-[#1c2032d8] rounded-2xl flex flex-wrap items-center justify-center gap-10 border-2 border-gray-500 ">
         <div

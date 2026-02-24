@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Manrope, Raleway} from "next/font/google";
 import "./globals.css";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Manrope, Raleway } from "next/font/google";
 import NavigationButton from "./components/Navigation";
 
 const geistSans = Geist({
@@ -10,8 +10,8 @@ const geistSans = Geist({
 
 const raleywaySans = Raleway({
   variable: "--font-raleway-sans",
-  subsets: ["latin"]
-})
+  subsets: ["latin"],
+});
 
 const manropeSans = Manrope({
   variable: "--font-manrope-sans",
@@ -43,11 +43,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({children}: Readonly<{children: React.ReactNode;}>) {
+export default function RootLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}>
-        <NavigationButton/>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}
+      >
+        <NavigationButton />
         {children}
       </body>
     </html>

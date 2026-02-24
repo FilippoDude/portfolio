@@ -52,9 +52,6 @@ export default function Home() {
 
           <div className="flex flex-row gap-4 items-center">
             <ContactsButtons></ContactsButtons>
-            <button className="bg-[#91ff00] py-2 h-fit mt-2 w-30 rounded-sm text-black font-sans font-bold opacity-80 cursor-pointer">
-              W.I.P
-            </button>
           </div>
         </div>
       </section>
