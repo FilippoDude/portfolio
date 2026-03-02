@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Project } from "../types";
-
+import gsap from "gsap";
 export default function ProjectPopup({
   project,
   closeProject,
@@ -28,18 +28,37 @@ export default function ProjectPopup({
   };
   useEffect(() => {
     containerRef.current?.addEventListener("scroll", onScroll);
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.2 },
+    );
   }, []);
+
+  const closeWithFadeout = () => {
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 1 },
+      {
+        opacity: 0,
+        duration: 0.2,
+        onComplete: () => {
+          closeProject();
+        },
+      },
+    );
+  };
   return (
     <div
       ref={containerRef}
-      className=" overscroll-none top-0 fixed w-full py-10 overflow-y-scroll scrollbar-hide h-full bg-[#1111131a] backdrop-blur-2xl z-10"
+      className="z-20 overscroll-none top-0 fixed w-full py-10 overflow-y-scroll scrollbar-hide h-full bg-[#1111131a] backdrop-blur-2xl"
     >
       <div className=" w-full  relative flex items-center justify-center ">
         <div className="relative w-10/12 min-h-400 bg-[#1c2032d8] rounded-4xl h-full p-8 flex justify-end flex-row gap-2">
           <div className="h-full w-full ">{project.innerPage}</div>
           <div className="sticky top-1/12 h-fit flex flex-col gap-2">
             <button
-              onClick={closeProject}
+              onClick={closeWithFadeout}
               className="font-raleway-sans text-6xl font-black text-white cursor-pointer"
             >
               X

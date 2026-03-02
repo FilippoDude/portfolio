@@ -7,6 +7,7 @@ import ProjectPopup from "./components/project-popup";
 import gsap from "gsap";
 import { getLatestCommit } from "../services/github-service";
 import PortoflioProject from "./projects/portfolio-crate";
+import { PlanetsBackground } from "./components/planets-background";
 const projects: Project[] = [
   {
     name: "Copypaste",
@@ -33,7 +34,6 @@ const ProjectsPage = () => {
   const [focusedProject, setFocusedProject] = useState<Project | null>(null);
   const projectRefs = useRef<HTMLButtonElement[]>([]);
   const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
-  const animationPlayingRef = useRef<boolean>(false);
 
   const playInAnimation = () => {
     for (let i = 0; i < projects.length; i++) {
@@ -79,47 +79,52 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div
-      className={` min-h-400 max-w-screen flex items-center justify-center flex-col bg-[#0F101B]`}
-    >
-      {focusedProject && (
-        <ProjectPopup
-          closeProject={closeFocusedProject}
-          project={focusedProject}
-        />
-      )}
-      <h1 className="font-raleway-sans text-6xl font-black text-white">
-        Projects
-      </h1>
-      {loadingProjects ? (
-        <></>
-      ) : (
-        <div className="flex flex-wrap mt-8 gap-2 max-w-320 justify-center">
-          {projects.map((project, i) => {
-            return (
-              <button
-                onClick={() => {
-                  projectClicked(project);
-                }}
-                key={i}
-                ref={(ref) => {
-                  if (ref) projectRefs.current[i] = ref;
-                }}
-                className="relative flex flex-col p-4 bg-[#42517340] rounded-2xl w-100 h-60 cursor-pointer z-0"
-              >
-                <h1 className="text-white text-2xl">{project.name}</h1>
-                <p className="text-white">{project.description}</p>
-                <p className="text-white absolute left-4 bottom-4">
-                  {project.latestGithubCommit
-                    ? "Latest commit: " +
-                      project.latestGithubCommit.toLocaleString()
-                    : ""}
-                </p>
-              </button>
-            );
-          })}
+    <div>
+      <div
+        className={` min-h-fit h-screen max-w-screen flex items-center flex-col bg-[#000000]`}
+      >
+        <div className="absolute inset-0">
+          <PlanetsBackground />
         </div>
-      )}
+        {focusedProject && (
+          <ProjectPopup
+            closeProject={closeFocusedProject}
+            project={focusedProject}
+          />
+        )}
+        <h1 className="z-10 font-raleway-sans text-6xl font-black text-white mt-40">
+          Projects
+        </h1>
+        {loadingProjects ? (
+          <></>
+        ) : (
+          <div className="flex flex-wrap mt-8 gap-2 max-w-320 justify-center">
+            {projects.map((project, i) => {
+              return (
+                <button
+                  onClick={() => {
+                    projectClicked(project);
+                  }}
+                  key={i}
+                  ref={(ref) => {
+                    if (ref) projectRefs.current[i] = ref;
+                  }}
+                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-2xl w-100 h-60 cursor-pointer z-0"
+                >
+                  <h1 className="text-white text-2xl">{project.name}</h1>
+                  <p className="text-white">{project.description}</p>
+                  <p className="text-white absolute left-4 bottom-4">
+                    {project.latestGithubCommit
+                      ? "Latest commit: " +
+                        project.latestGithubCommit.toLocaleString()
+                      : ""}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
