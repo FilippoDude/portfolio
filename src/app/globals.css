@@ -58,3 +58,11 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.projects-project h1 {
+  font-size: 36px;
+}
+
+.projects-project p {
+  font-size: 16px;
+}

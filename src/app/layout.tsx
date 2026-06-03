@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Manrope, Raleway } from "next/font/google";
 import NavigationButton from "./components/Navigation";
+import { ImagePopUpProvider } from "./components/ClickableImage";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,8 +52,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}
       >
-        <NavigationButton />
-        {children}
+        <ImagePopUpProvider>
+          <NavigationButton />
+          {children}
+        </ImagePopUpProvider>
       </body>
     </html>
   );

@@ -6,14 +6,15 @@ import { Project } from "./types";
 import ProjectPopup from "./components/project-popup";
 import gsap from "gsap";
 import { getLatestCommit } from "../services/github-service";
-import PortoflioProject from "./projects/portfolio-crate";
+import PortoflioProject from "./projects/portfolio";
 import { PlanetsBackground } from "./components/planets-background";
+import CopypasteProject from "./projects/copypaste";
 const projects: Project[] = [
   {
     name: "Copypaste",
     description: "Copy and paste long text quickly between multiple devices!",
     backgroundImage: "",
-    innerPage: <WidgetsCrateProject />,
+    innerPage: <CopypasteProject />,
     github: "copypaste",
   },
   {
@@ -21,6 +22,48 @@ const projects: Project[] = [
     description: "Small app",
     backgroundImage: "",
     innerPage: <WidgetsCrateProject />,
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
+  },
+  {
+    name: "Portfolio",
+    description: "Small app",
+    backgroundImage: "",
+    innerPage: <PortoflioProject />,
+    github: "portfolio",
   },
   {
     name: "Portfolio",
@@ -92,7 +135,7 @@ const ProjectsPage = () => {
             project={focusedProject}
           />
         )}
-        <h1 className="z-10 font-raleway-sans text-6xl font-black text-white mt-40">
+        <h1 className="z-10 px-20 py-4 rounded-2xl font-raleway-sans text-6xl font-black text-white mt-40">
           Projects
         </h1>
         {loadingProjects ? (
@@ -109,11 +152,11 @@ const ProjectsPage = () => {
                   ref={(ref) => {
                     if (ref) projectRefs.current[i] = ref;
                   }}
-                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-2xl w-100 h-60 cursor-pointer z-0"
+                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-2xl w-100 h-60 cursor-pointer z-0 hover:bg-[#293247b0] duration-100 transition-all backdrop-blur-2xl"
                 >
                   <h1 className="text-white text-2xl">{project.name}</h1>
-                  <p className="text-white">{project.description}</p>
-                  <p className="text-white absolute left-4 bottom-4">
+                  <p className="text-white opacity-75">{project.description}</p>
+                  <p className="text-[#E49D53] absolute left-4 bottom-4">
                     {project.latestGithubCommit
                       ? "Latest commit: " +
                         project.latestGithubCommit.toLocaleString()
