@@ -2,74 +2,47 @@
 
 import { useEffect, useRef, useState } from "react";
 import WidgetsCrateProject from "./projects/widgets-crate";
-import { Project } from "./types";
+import { BaseTechTypes, Project } from "./types";
 import ProjectPopup from "./components/project-popup";
 import gsap from "gsap";
 import { getLatestCommit } from "../services/github-service";
 import PortoflioProject from "./projects/portfolio";
 import { PlanetsBackground } from "./components/planets-background";
 import CopypasteProject from "./projects/copypaste";
+
 const projects: Project[] = [
   {
     name: "Copypaste",
     description: "Copy and paste long text quickly between multiple devices!",
     backgroundImage: "",
+    previewImage: "/copypaste-project/main-menu.png",
     innerPage: <CopypasteProject />,
+    usedTech: [
+      BaseTechTypes.react,
+      BaseTechTypes.node,
+      BaseTechTypes.typescript,
+    ],
     github: "copypaste",
   },
   {
     name: "Widgets Crate",
-    description: "Small app",
+    description: "An app for android containing widgets.",
     backgroundImage: "",
+    previewImage: "",
+    usedTech: [BaseTechTypes.android],
     innerPage: <WidgetsCrateProject />,
   },
   {
     name: "Portfolio",
-    description: "Small app",
+    description: "The website you are looking at right now.",
     backgroundImage: "",
+    previewImage: "/portfolioPreview.png",
     innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
-    github: "portfolio",
-  },
-  {
-    name: "Portfolio",
-    description: "Small app",
-    backgroundImage: "",
-    innerPage: <PortoflioProject />,
+    usedTech: [
+      BaseTechTypes.react,
+      BaseTechTypes.node,
+      BaseTechTypes.typescript,
+    ],
     github: "portfolio",
   },
 ];
@@ -152,16 +125,44 @@ const ProjectsPage = () => {
                   ref={(ref) => {
                     if (ref) projectRefs.current[i] = ref;
                   }}
-                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-2xl w-100 h-60 cursor-pointer z-0 hover:bg-[#293247b0] duration-100 transition-all backdrop-blur-2xl"
+                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-xl w-100 h-100 cursor-pointer z-0 hover:bg-[#293247b0] duration-100 transition-all backdrop-blur-2xl"
                 >
-                  <h1 className="text-white text-2xl">{project.name}</h1>
-                  <p className="text-white opacity-75">{project.description}</p>
-                  <p className="text-[#E49D53] absolute left-4 bottom-4">
-                    {project.latestGithubCommit
-                      ? "Latest commit: " +
-                        project.latestGithubCommit.toLocaleString()
-                      : ""}
+                  {project.previewImage ? (
+                    <img
+                      className="rounded-md"
+                      src={project.previewImage}
+                      alt="preview image"
+                    />
+                  ) : null}
+                  <h1 className="text-white text-2xl mt-2 text-left">
+                    {project.name}
+                  </h1>
+                  <p className="text-white opacity-75 text-left">
+                    {project.description}
                   </p>
+
+                  <div className="relative w-full h-full">
+                    <div className="w-full absolute bottom-0 flex flex-col">
+                      <div className="absolute bottom-8 h-12 flex flex-row gap-2 w-full bg-[#fff45ee8] p-2 rounded-md">
+                        {project.usedTech.map((el) => {
+                          return (
+                            <img
+                              className="max-w-8"
+                              src={el.logoImageSrc}
+                              alt={el.displayName}
+                            />
+                          );
+                        })}
+                      </div>
+
+                      <p className="text-[#E49D53]">
+                        {project.latestGithubCommit
+                          ? "Latest commit: " +
+                            project.latestGithubCommit.toLocaleString()
+                          : ""}
+                      </p>
+                    </div>
+                  </div>
                 </button>
               );
             })}

@@ -54,7 +54,7 @@ export default function ProjectPopup({
       className="z-20 overscroll-none top-0 fixed w-full py-10 overflow-y-scroll scrollbar-hide h-full bg-[#1111131a] backdrop-blur-2xl"
     >
       <div className=" w-full  relative flex items-center justify-center ">
-        <div className="relative w-10/12 min-h-400 bg-[#1c2032d8] rounded-4xl h-full p-8 flex justify-end flex-row gap-2">
+        <div className="relative w-8/12 min-h-400 bg-[#1c2032d8] rounded-4xl h-full p-8 flex justify-end flex-row gap-2">
           <div className="h-full w-full ">{project.innerPage}</div>
           <div className="sticky top-1/12 h-fit flex flex-col gap-2">
             <button
