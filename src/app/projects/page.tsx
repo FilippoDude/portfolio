@@ -9,6 +9,7 @@ import { getLatestCommit } from "../services/github-service";
 import PortoflioProject from "./projects/portfolio";
 import { PlanetsBackground } from "./components/planets-background";
 import CopypasteProject from "./projects/copypaste";
+import { exitCode } from "process";
 
 const projects: Project[] = [
   {
@@ -23,14 +24,20 @@ const projects: Project[] = [
       BaseTechTypes.typescript,
     ],
     github: "copypaste",
+    projectLink: "https://github.com/FilippoDude/copypaste",
+    demoLink: "https://copypaste.filippodude.com",
+    priority: 3
   },
   {
     name: "Widgets Crate",
     description: "An app for android containing widgets.",
-    backgroundImage: "",
+    backgroundImage: "",  
     previewImage: "",
-    usedTech: [BaseTechTypes.android],
+    usedTech: [],
     innerPage: <WidgetsCrateProject />,
+    projectLink: "https://github.com/FilippoDude/widgetscrate",
+    demoLink: "https://widgetscrate.filippodude.com",
+    priority: 1
   },
   {
     name: "Portfolio",
@@ -44,7 +51,11 @@ const projects: Project[] = [
       BaseTechTypes.typescript,
     ],
     github: "portfolio",
+    projectLink: "https://github.com/FilippoDude/portfolio",
+    demoLink: "https://filippodude.com",
+    priority: 2
   },
+
 ];
 const ProjectsPage = () => {
   const [focusedProject, setFocusedProject] = useState<Project | null>(null);
@@ -62,6 +73,7 @@ const ProjectsPage = () => {
   };
 
   const getCommits = async () => {
+    try {
     await Promise.all(
       projects.map(async (project) => {
         if (project.github)
@@ -70,19 +82,29 @@ const ProjectsPage = () => {
           ));
       }),
     );
+  } catch(e){
 
-    projects.sort((a, b) => {
+  }
+
+/*    projects.sort((a, b) => {
       if (!a.latestGithubCommit) return 1;
       if (!b.latestGithubCommit) return -1;
-
+      console.log()
       return b.latestGithubCommit.getTime() - a.latestGithubCommit.getTime();
     });
-    console.log(projects);
+*/
+    
+    projects.sort((a, b) => {
+      if (!a.priority) return 1;
+      if (!b.priority) return -1;
+      return a.priority - b.priority;
+    });
+
     setLoadingProjects(false);
   };
   useEffect(() => {
     getCommits();
-  }, []);
+  }, [projectRefs.current]);
   useEffect(() => {
     playInAnimation();
   }, [loadingProjects]);
@@ -95,7 +117,7 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div>
+    <div className="bg-[#000000]">
       <div
         className={` min-h-fit h-screen max-w-screen flex items-center flex-col bg-[#000000]`}
       >
@@ -114,7 +136,7 @@ const ProjectsPage = () => {
         {loadingProjects ? (
           <></>
         ) : (
-          <div className="flex flex-wrap mt-8 gap-2 max-w-320 justify-center">
+          <div className="flex mb-10 flex-wrap mt-8 gap-2 max-w-320 justify-center">
             {projects.map((project, i) => {
               return (
                 <button
@@ -137,13 +159,13 @@ const ProjectsPage = () => {
                   <h1 className="text-white text-2xl mt-2 text-left">
                     {project.name}
                   </h1>
-                  <p className="text-white opacity-75 text-left">
+                  <p className="text-white opacity-75 text-left h-full">
                     {project.description}
                   </p>
 
-                  <div className="relative w-full h-full">
-                    <div className="w-full absolute bottom-0 flex flex-col">
-                      <div className="absolute bottom-8 h-12 flex flex-row gap-2 w-full bg-[#fff45ee8] p-2 rounded-md">
+                  <div className="relative w-full mt-1">
+                    <div className="w-full flex flex-col">
+                      <div className="relative h-12 flex flex-row gap-2 w-full bg-[#00000050] p-2 rounded-md">
                         {project.usedTech.map((el) => {
                           return (
                             <img
@@ -154,7 +176,10 @@ const ProjectsPage = () => {
                           );
                         })}
                       </div>
-
+                      <div className="flex flex-row mt-2 gap-2">
+                        <span className="bg-[#00000050] text-nowrap text-white p-2 rounded-md">Source code</span>
+                        <span className=" bg-[#E49D53] w-full text-nowrapbg-[#00000050] text-white p-2 rounded-md">Live project</span>
+                      </div>
                       <p className="text-[#E49D53]">
                         {project.latestGithubCommit
                           ? "Latest commit: " +

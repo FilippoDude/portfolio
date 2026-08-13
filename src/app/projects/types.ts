@@ -7,6 +7,11 @@ export interface Project {
   innerPage: React.ReactNode;
   github?: string;
   latestGithubCommit?: Date;
+  priority?: number,
+  projectLink?: string,
+  demoLink?: string
+
+
 }
 
 interface TechRecordType {

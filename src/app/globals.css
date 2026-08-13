@@ -22,7 +22,7 @@
 }
 
 body {
-  background: var(--color-background);
+  background: #000000;
 }
 
 .no-scrollbar::-webkit-scrollbar {

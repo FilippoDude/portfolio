@@ -36,8 +36,7 @@ export default function Home() {
           </h1>
           <p className="text-xl mt-2 opacity-80 font-sans text-white">
             Hi, I&apos;m a developer based in Italy that focuses mainly on web
-            and app development. I've gone to an IT focused school and in
-            general technology plays a big role in my life.
+            and app development. Most of my life has been focused around IT
           </p>
           <div className="w-10/12 mt-2 h-0.5 bg-white opacity-60 rounded-2xl"></div>
           <p className="text-xl mt-2 opacity-80 font-sans text-white">

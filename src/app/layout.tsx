@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}
+        className={`bg-black! ${geistSans.variable} ${geistMono.variable} ${manropeSans.variable} ${raleywaySans.variable} antialiased`}
       >
         <ImagePopUpProvider>
           <NavigationButton />

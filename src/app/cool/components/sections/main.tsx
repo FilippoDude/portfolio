@@ -58,8 +58,8 @@ const Main = () => {
                         <Particles/>
                     </div>
                     <div className="relative flex items-center justify-center">
-                        <h1 ref={titleBlurRef} className="select-none absolute text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
-                        <h1 ref={titleRef} className="text-center sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
+                        <h1 ref={titleBlurRef} className="select-none absolute text-center! sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-white blur-xs opacity-0">Filippo Grochala</h1>
+                        <h1 ref={titleRef} className="text-center! sm:text-left text-7xl sm:text-8xl font-raleway-sans font-bold text-[#FFFFFF20]">Filippo Grochala</h1>
                     </div>
                     {/*<h1 className="mt-6 select-none text-center text-3xl font-raleway-sans font-bold text-white opacity-100">
                         <span className="text-green-200 block">

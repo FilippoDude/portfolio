@@ -192,6 +192,21 @@ const MainSection = ({
                 height={0}
               ></Image>
             </button>
+                        <button
+              onClick={() =>
+                (window.location.href = "https://t.me/FIlippodude")
+              }
+              className="relative mt-2 md:mt-0 font-sans font-bold text-2xl bg-[#17192A] text-white px-4 h-16 rounded-2xl duration-200 hover:opacity-90 cursor-grab opacity-50"
+            >
+              CV
+              <Image
+                className="absolute -top-3 -right-3"
+                src="lamp.svg"
+                alt="Lamp"
+                width={30}
+                height={0}
+              ></Image>
+            </button>
           </div>
 
           {/*<button

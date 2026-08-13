@@ -12,7 +12,7 @@ export default function CopypasteProject() {
       </p>
       <h2 className="text-white mt-2 pacity-80">How it works:</h2>
       <ClickableImage
-        customCss="mt-4 h-160"
+        customCss="mt-4  max-h-160"
         alt="Main menu"
         src="/copypaste-project/main-menu.png"
       />
@@ -21,7 +21,7 @@ export default function CopypasteProject() {
         join an existing one.
       </p>
       <ClickableImage
-        customCss="mt-4 h-160"
+        customCss="mt-4 max-h-160"
         alt="ReCaptcha"
         src="/copypaste-project/captcha-verified.png"
       />
@@ -31,7 +31,7 @@ export default function CopypasteProject() {
         requirement.
       </p>
       <ClickableImage
-        customCss="mt-4 h-160"
+        customCss="mt-4 max-h-160"
         alt="Session"
         src="/copypaste-project/session.png"
       />
