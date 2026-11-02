@@ -7,6 +7,7 @@ type NavigationButtonType = { name: string; link: string; customLink: boolean };
 const navigationButtons: NavigationButtonType[] = [
   { name: "Home", link: "/", customLink: false },
   { name: "Projects", link: "/projects", customLink: false },
+  { name: "3D Models", link: "/models", customLink: false },
   {
     name: "Copypaste",
     link: "https://copypaste.filippodude.com",

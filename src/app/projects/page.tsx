@@ -1,198 +1,139 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import WidgetsCrateProject from "./projects/widgets-crate";
-import { BaseTechTypes, Project } from "./types";
-import ProjectPopup from "./components/project-popup";
 import gsap from "gsap";
-import { getLatestCommit } from "../services/github-service";
-import PortoflioProject from "./projects/portfolio";
-import { PlanetsBackground } from "./components/planets-background";
-import CopypasteProject from "./projects/copypaste";
-import { exitCode } from "process";
+import { Project, ProjectCategory } from "./types";
+import { projects } from "./data";
+import ProjectPopup from "./components/project-popup";
+import ProjectCard, { EarlierProjectRow } from "./components/project-card";
+import { getRepoPushDates } from "../services/github-service";
+import dynamic from "next/dynamic";
 
-const projects: Project[] = [
-  {
-    name: "Copypaste",
-    description: "Copy and paste long text quickly between multiple devices!",
-    backgroundImage: "",
-    previewImage: "/copypaste-project/main-menu.png",
-    innerPage: <CopypasteProject />,
-    usedTech: [
-      BaseTechTypes.react,
-      BaseTechTypes.node,
-      BaseTechTypes.typescript,
-    ],
-    github: "copypaste",
-    projectLink: "https://github.com/FilippoDude/copypaste",
-    demoLink: "https://copypaste.filippodude.com",
-    priority: 3
-  },
-  {
-    name: "Widgets Crate",
-    description: "An app for android containing widgets.",
-    backgroundImage: "",  
-    previewImage: "",
-    usedTech: [],
-    innerPage: <WidgetsCrateProject />,
-    projectLink: "https://github.com/FilippoDude/widgetscrate",
-    demoLink: "https://widgetscrate.filippodude.com",
-    priority: 1
-  },
-  {
-    name: "Portfolio",
-    description: "The website you are looking at right now.",
-    backgroundImage: "",
-    previewImage: "/portfolioPreview.png",
-    innerPage: <PortoflioProject />,
-    usedTech: [
-      BaseTechTypes.react,
-      BaseTechTypes.node,
-      BaseTechTypes.typescript,
-    ],
-    github: "portfolio",
-    projectLink: "https://github.com/FilippoDude/portfolio",
-    demoLink: "https://filippodude.com",
-    priority: 2
-  },
+// Client only: the background bails out on the server, which breaks hydration
+const PlanetsBackground = dynamic(
+  () =>
+    import("./components/planets-background").then((m) => m.PlanetsBackground),
+  { ssr: false },
+);
 
+type Filter = "All" | ProjectCategory;
+
+const sortedProjects = [...projects].sort((a, b) => a.priority - b.priority);
+const filters: Filter[] = [
+  "All",
+  ...Array.from(new Set(sortedProjects.map((p) => p.category))),
 ];
+
 const ProjectsPage = () => {
   const [focusedProject, setFocusedProject] = useState<Project | null>(null);
-  const projectRefs = useRef<HTMLButtonElement[]>([]);
-  const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
+  const [filter, setFilter] = useState<Filter>("All");
+  const [pushDates, setPushDates] = useState<Record<string, Date>>({});
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const playInAnimation = () => {
-    for (let i = 0; i < projects.length; i++) {
-      gsap.fromTo(
-        projectRefs.current[i],
-        { x: -10, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.2, delay: 0.2 * i },
-      );
-    }
-  };
+  const filteredProjects =
+    filter == "All"
+      ? sortedProjects
+      : sortedProjects.filter((p) => p.category == filter);
+  const visibleProjects = filteredProjects.filter((p) => !p.archived);
+  const earlierProjects = filteredProjects.filter((p) => p.archived);
 
-  const getCommits = async () => {
-    try {
-    await Promise.all(
-      projects.map(async (project) => {
-        if (project.github)
-          return (project.latestGithubCommit = new Date(
-            Date.parse((await getLatestCommit(undefined, project.github)).date),
-          ));
-      }),
+  useEffect(() => {
+    getRepoPushDates()
+      .then(setPushDates)
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const cards = projectRefs.current
+      .slice(0, visibleProjects.length)
+      .filter(Boolean);
+    gsap.fromTo(
+      cards,
+      { y: 10, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.3, stagger: 0.06 },
     );
-  } catch(e){
+  }, [filter]);
 
-  }
-
-/*    projects.sort((a, b) => {
-      if (!a.latestGithubCommit) return 1;
-      if (!b.latestGithubCommit) return -1;
-      console.log()
-      return b.latestGithubCommit.getTime() - a.latestGithubCommit.getTime();
-    });
-*/
-    
-    projects.sort((a, b) => {
-      if (!a.priority) return 1;
-      if (!b.priority) return -1;
-      return a.priority - b.priority;
-    });
-
-    setLoadingProjects(false);
-  };
-  useEffect(() => {
-    getCommits();
-  }, [projectRefs.current]);
-  useEffect(() => {
-    playInAnimation();
-  }, [loadingProjects]);
-
-  const closeFocusedProject = () => {
-    setFocusedProject(null);
-  };
-  const projectClicked = (project: Project) => {
-    setFocusedProject(project);
-  };
+  const getUpdated = (project: Project) =>
+    project.github ? pushDates[project.github.toLowerCase()] : undefined;
 
   return (
-    <div className="bg-[#000000]">
-      <div
-        className={` min-h-fit h-screen max-w-screen flex items-center flex-col bg-[#000000]`}
-      >
-        <div className="absolute inset-0">
-          <PlanetsBackground />
-        </div>
-        {focusedProject && (
-          <ProjectPopup
-            closeProject={closeFocusedProject}
-            project={focusedProject}
-          />
-        )}
-        <h1 className="z-10 px-20 py-4 rounded-2xl font-raleway-sans text-6xl font-black text-white mt-40">
+    <div className="relative min-h-screen max-w-screen overflow-x-hidden bg-[#000000]">
+      <div className="fixed inset-0">
+        <PlanetsBackground />
+      </div>
+      {focusedProject && (
+        <ProjectPopup
+          closeProject={() => setFocusedProject(null)}
+          project={focusedProject}
+          updated={getUpdated(focusedProject)}
+        />
+      )}
+      <div className="relative z-10 flex flex-col items-center px-4 sm:px-10 pb-20">
+        <h1 className="font-raleway-sans text-6xl font-black text-white mt-32 sm:mt-40">
           Projects
         </h1>
-        {loadingProjects ? (
-          <></>
-        ) : (
-          <div className="flex mb-10 flex-wrap mt-8 gap-2 max-w-320 justify-center">
-            {projects.map((project, i) => {
-              return (
-                <button
-                  onClick={() => {
-                    projectClicked(project);
-                  }}
-                  key={i}
-                  ref={(ref) => {
-                    if (ref) projectRefs.current[i] = ref;
-                  }}
-                  className="relative flex flex-col p-4 bg-[#425173b0] rounded-xl w-100 h-100 cursor-pointer z-0 hover:bg-[#293247b0] duration-100 transition-all backdrop-blur-2xl"
-                >
-                  {project.previewImage ? (
-                    <img
-                      className="rounded-md"
-                      src={project.previewImage}
-                      alt="preview image"
-                    />
-                  ) : null}
-                  <h1 className="text-white text-2xl mt-2 text-left">
-                    {project.name}
-                  </h1>
-                  <p className="text-white opacity-75 text-left h-full">
-                    {project.description}
-                  </p>
-
-                  <div className="relative w-full mt-1">
-                    <div className="w-full flex flex-col">
-                      <div className="relative h-12 flex flex-row gap-2 w-full bg-[#00000050] p-2 rounded-md">
-                        {project.usedTech.map((el) => {
-                          return (
-                            <img
-                              className="max-w-8"
-                              src={el.logoImageSrc}
-                              alt={el.displayName}
-                            />
-                          );
-                        })}
-                      </div>
-                      <div className="flex flex-row mt-2 gap-2">
-                        <span className="bg-[#00000050] text-nowrap text-white p-2 rounded-md">Source code</span>
-                        <span className=" bg-[#E49D53] w-full text-nowrapbg-[#00000050] text-white p-2 rounded-md">Live project</span>
-                      </div>
-                      <p className="text-[#E49D53]">
-                        {project.latestGithubCommit
-                          ? "Latest commit: " +
-                            project.latestGithubCommit.toLocaleString()
-                          : ""}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+        <p className="text-white opacity-70 text-xl mt-2 text-center max-w-150">
+          Things I&apos;ve built, from full-stack web apps to Android widgets and
+          3D experiments.
+        </p>
+        <div className="flex flex-row flex-wrap justify-center gap-2 mt-8">
+          {filters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`cursor-pointer px-4 py-2 rounded-full text-sm font-bold backdrop-blur-2xl duration-100 transition-colors ${filter == f ? "bg-[#E49D53] text-white" : "bg-[#425173b0] text-white opacity-80 hover:opacity-100"}`}
+            >
+              {f}
+              <span className="ml-1.5 opacity-60">
+                {f == "All"
+                  ? sortedProjects.length
+                  : sortedProjects.filter((p) => p.category == f).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-8 w-full max-w-320">
+          {visibleProjects.map((project, i) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              updated={getUpdated(project)}
+              featured={filter == "All" && project.featured}
+              onOpen={() => setFocusedProject(project)}
+              innerRef={(el) => {
+                projectRefs.current[i] = el;
+              }}
+            />
+          ))}
+        </div>
+        {earlierProjects.length > 0 ? (
+          <div className="w-full max-w-320 mt-16">
+            <h2 className="font-raleway-sans text-3xl font-black text-white">
+              Earlier work
+            </h2>
+            <p className="text-white opacity-60 mt-1">
+              Older and smaller projects, kept here as they are.
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              {earlierProjects.map((project) => (
+                <EarlierProjectRow
+                  key={project.slug}
+                  project={project}
+                  onOpen={() => setFocusedProject(project)}
+                />
+              ))}
+            </div>
           </div>
-        )}
+        ) : null}
+        <a
+          href="https://github.com/FilippoDude"
+          target="_blank"
+          rel="noreferrer"
+          className="mt-10 text-white opacity-70 hover:opacity-100 duration-100 underline underline-offset-4"
+        >
+          See everything on GitHub
+        </a>
       </div>
     </div>
   );

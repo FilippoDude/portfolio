@@ -9,6 +9,11 @@ import Link from "next/link";
 
 const threeDProjects = [
   {
+    name: "3D Models",
+    description: "Models I've made in Blender, viewable in 3D.",
+    link: "/models",
+  },
+  {
     name: "3D Laptop",
     description: "Laptop modelled in Blender and animated with GSAP.",
     link: "/cool",

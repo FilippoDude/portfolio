@@ -35,3 +35,22 @@ export async function getLatestCommit(
     url: commit.html_url,
   };
 }
+
+// One request for every repo instead of one per project, to stay under the
+// unauthenticated rate limit
+export async function getRepoPushDates(
+  owner: string = "FilippoDude",
+): Promise<Record<string, Date>> {
+  const res = await fetch(
+    `https://api.github.com/users/${owner}/repos?per_page=100`,
+  );
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch repos for ${owner}`);
+  }
+
+  const data: { name: string; pushed_at: string }[] = await res.json();
+  return Object.fromEntries(
+    data.map((repo) => [repo.name.toLowerCase(), new Date(repo.pushed_at)]),
+  );
+}

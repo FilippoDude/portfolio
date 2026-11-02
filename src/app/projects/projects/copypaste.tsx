@@ -3,14 +3,12 @@ import ClickableImage from "@/app/components/ClickableImage";
 export default function CopypasteProject() {
   return (
     <div className="w-full projects-project">
-      {" "}
-      <h1 className="text-white text-4xl">Copypaste</h1>
-      <p className="text-white mt-4 opacity-80">
+      <p className="text-white opacity-80">
         A web application that allows users to quickly share text and edit in
         real time between multiple devices. No login is required and only a
         captcha is needed to create or join a session.
       </p>
-      <h2 className="text-white mt-2 pacity-80">How it works:</h2>
+      <h2 className="text-white mt-4 font-bold text-xl">How it works</h2>
       <ClickableImage
         customCss="mt-4  max-h-160"
         alt="Main menu"
