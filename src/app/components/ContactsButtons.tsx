@@ -14,27 +14,19 @@ const ContactsButtons = () => {
           src={"telegram.svg"}
         ></Image>
       </button>
-      <button className=" relative w-16 h-16 cursor-pointer">
-        <Image
-          onClick={() =>
-            (window.location.href = "https://www.fiverr.com/s/99oGmGa")
-          }
-          fill={true}
-          className=""
-          alt="fiverr"
-          src={"fiverr.svg"}
-        ></Image>
+      <button
+        onClick={() =>
+          (window.location.href = "mailto:filippogrochala@gmail.com")
+        }
+        className="relative w-16 h-16 cursor-pointer"
+      >
+        <Image fill={true} className="" alt="email" src={"mail.svg"}></Image>
       </button>
-      <button className=" relative w-16 h-16 cursor-pointer">
-        <Image
-          onClick={() =>
-            (window.location.href = "https://github.com/FilippoDude")
-          }
-          fill={true}
-          className=""
-          alt="fiverr"
-          src={"github.svg"}
-        ></Image>
+      <button
+        onClick={() => (window.location.href = "https://github.com/FilippoDude")}
+        className="relative w-16 h-16 cursor-pointer"
+      >
+        <Image fill={true} className="" alt="github" src={"github.svg"}></Image>
       </button>
     </div>
   );

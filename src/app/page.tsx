@@ -5,6 +5,20 @@ import MainSection from "./components/sections/Main";
 import SkillsSection from "./components/sections/Skills";
 import ContactsButtons from "./components/ContactsButtons";
 import Laptop3d from "./components/Laptop3d";
+import Link from "next/link";
+
+const threeDProjects = [
+  {
+    name: "3D Laptop",
+    description: "Laptop modelled in Blender and animated with GSAP.",
+    link: "/cool",
+  },
+  {
+    name: "3D Game Demo",
+    description: "Small platformer built with React Three Fiber.",
+    link: "/game",
+  },
+];
 
 export default function Home() {
   const skillsSectionRef = useRef<HTMLDivElement | null>(null);
@@ -16,6 +30,31 @@ export default function Home() {
         aboutmeRef={aboutmeSectionRef}
       ></MainSection>
       <SkillsSection externalRef={skillsSectionRef}></SkillsSection>
+      <section className="relative w-full h-fit py-20 bg-[#0F101B] flex flex-col items-center px-10">
+        <h1 className="font-raleway-sans text-5xl sm:text-6xl font-black text-white opacity-80">
+          3D
+        </h1>
+        <p className="text-xl mt-2 opacity-60 font-sans text-white text-center">
+          Small experiments made with Three.js, React Three Fiber and Blender.
+        </p>
+        <div className="mt-8 flex flex-col md:flex-row gap-4">
+          {threeDProjects.map((project) => (
+            <Link
+              key={project.link}
+              href={project.link}
+              className="group w-80 bg-[#17192A] rounded-2xl px-6 py-6 flex flex-col gap-2 duration-200 hover:bg-[#425173d0]"
+            >
+              <p className="font-raleway-sans text-2xl font-bold text-white">
+                {project.name}
+              </p>
+              <p className="font-sans text-white opacity-70">
+                {project.description}
+              </p>
+              <div className="group-hover:w-full h-0.5 w-0 bg-[#E49D53] duration-100"></div>
+            </Link>
+          ))}
+        </div>
+      </section>
       {/*<section className="relative min-h-180 w-full h-screen overflow-hidden bg-[#0F101B] flex flex-col items-center justify-center ">
           <div className="w-full flex flex-col items-center">
           <h1 className="px-10 sm:px-0 font-raleway-sans text-5xl sm:text-6xl font-black text-white opacity-80">PAST EXPERIENCES</h1>
