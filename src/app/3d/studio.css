@@ -1,0 +1,30 @@
+/* Tokens for the standalone 3D portfolio. Single dark theme on purpose:
+   the renders are lit for a dark backdrop. */
+.studio {
+  --bg: #16181d;
+  --panel: #1e2128;
+  --line: #2c303a;
+  --fg: #e9eaee;
+  --muted: #9aa0ad;
+  --accent: #ee7a3a;
+  --accent-ink: #1a0f08;
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.studio .font-display {
+  font-family: var(--font-chakra), "Arial Narrow", system-ui, sans-serif;
+}
+
+.studio .font-spec {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+.studio :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

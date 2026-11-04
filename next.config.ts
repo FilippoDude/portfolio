@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // The old models page was replaced by the standalone 3D portfolio
+  async redirects() {
+    return [{ source: "/models", destination: "/3d", permanent: true }];
+  },
 };
 
 export default nextConfig;
