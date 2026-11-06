@@ -20,7 +20,7 @@ function Toggle({
       type="button"
       aria-pressed={pressed}
       onClick={onClick}
-      className={`cursor-pointer rounded px-3 py-2 text-[0.82rem] font-semibold transition-colors ${pressed ? "bg-(--accent) text-(--accent-ink)" : "bg-[#00000080] text-(--fg) hover:bg-[#000000b0]"}`}
+      className={`rounded-theme min-h-11 cursor-pointer border px-3.5 text-[0.85rem] font-semibold transition-colors duration-150 ${pressed ? "border-(--accent) bg-(--accent) text-(--accent-ink)" : "border-(--line) bg-(--panel) text-(--fg) hover:border-(--accent)"}`}
     >
       {children}
     </button>
@@ -47,7 +47,7 @@ export default function ViewerPanel({
 
   return (
     <div>
-      <div className="relative aspect-square w-full overflow-hidden rounded-md border border-(--line) bg-[radial-gradient(circle_at_50%_40%,#2a2e38,#16181d_70%)] sm:aspect-[4/3]">
+      <div className="stage rounded-theme relative aspect-square w-full overflow-hidden border border-(--line) sm:aspect-[4/3]">
         <div
           role="img"
           aria-label={`Interactive 3D model of the ${name}`}
@@ -70,7 +70,7 @@ export default function ViewerPanel({
           </Toggle>
         </div>
         {stats ? (
-          <p className="font-spec absolute bottom-3 left-3 m-0 flex gap-3 rounded bg-[#00000080] px-3 py-2 text-[0.75rem] text-(--muted)">
+          <p className="font-spec rounded-theme absolute bottom-3 left-3 m-0 flex gap-3 border border-(--line) bg-(--panel) px-3 py-2 text-[0.8rem] text-(--muted)">
             <span>{stats.triangles.toLocaleString("en-US")} tris</span>
             <span>{stats.vertices.toLocaleString("en-US")} verts</span>
             <span>{stats.meshes} meshes</span>

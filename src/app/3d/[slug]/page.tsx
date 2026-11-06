@@ -64,7 +64,7 @@ export default async function ModelPage({ params }: { params: Params }) {
           <p className="m-0 text-(--muted)">{model.variant}</p>
           <p className="mt-4">{model.description}</p>
 
-          <dl className="mt-5 mb-0 rounded-md border border-(--line) bg-(--panel) px-4 py-1">
+          <dl className="mt-5 mb-0 rounded-theme border border-(--line) bg-(--panel) px-4 py-1">
             <Spec label="Tris">{model.tris.toLocaleString("en-US")}</Spec>
             <Spec label="Made with">{model.tools.join(", ")}</Spec>
             <Spec label="Format">GLB, textures embedded</Spec>
@@ -74,14 +74,14 @@ export default async function ModelPage({ params }: { params: Params }) {
           <div className="mt-5 flex flex-wrap gap-3">
             <a
               href={`mailto:${EMAIL}?subject=${mailSubject}`}
-              className="rounded bg-(--accent) px-3.5 py-2.5 text-[0.9rem] font-semibold text-(--accent-ink) no-underline hover:brightness-110"
+              className="rounded-theme bg-(--accent) px-3.5 py-2.5 text-[0.9rem] font-semibold text-(--accent-ink) no-underline hover:brightness-110"
             >
               Commission something similar
             </a>
             {model.link ? (
               <a
                 href={model.link.href}
-                className="rounded border border-(--line) px-3.5 py-2.5 text-[0.9rem] no-underline hover:border-(--accent)"
+                className="rounded-theme border border-(--line) px-3.5 py-2.5 text-[0.9rem] no-underline hover:border-(--accent)"
               >
                 {model.link.label}
               </a>
@@ -97,7 +97,7 @@ export default async function ModelPage({ params }: { params: Params }) {
           width={model.renderWidth}
           height={model.renderHeight}
           sizes="(max-width: 760px) 100vw, 720px"
-          className="h-auto w-full max-w-[720px] rounded-md border border-(--line)"
+          className="h-auto w-full max-w-[720px] rounded-theme border border-(--line)"
         />
         <figcaption className="mt-2 text-[0.82rem] text-(--muted)">{model.renderNote}</figcaption>
       </figure>

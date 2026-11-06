@@ -1,24 +1,11 @@
 import "./studio.css";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Chakra_Petch, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { ROBLOX_STORE } from "./data";
 
-const chakra = Chakra_Petch({
-  variable: "--font-chakra",
-  weight: ["500", "700"],
-  subsets: ["latin"],
-});
-const plexSans = IBM_Plex_Sans({
-  variable: "--font-plex-sans",
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-});
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  weight: ["400", "500"],
-  subsets: ["latin"],
-});
+// Headings in Space Grotesk; body text uses Manrope, which the root layout already loads
+const grotesk = Space_Grotesk({ variable: "--font-display", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -41,9 +28,7 @@ export default function StudioLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div
-      className={`studio min-h-screen ${chakra.variable} ${plexSans.variable} ${plexMono.variable}`}
-    >
+    <div className={`studio min-h-screen ${grotesk.variable}`}>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 bg-(--accent) text-(--accent-ink) px-3 py-2 rounded font-semibold"
@@ -79,7 +64,7 @@ export default function StudioLayout({
           </nav>
         </header>
         <main id="main">{children}</main>
-        <footer className="border-t border-(--line) pt-6 pb-10 mt-16 text-(--muted) text-[0.85rem] flex flex-wrap justify-between gap-3">
+        <footer className="border-t border-(--line) pt-6 pb-12 mt-24 text-(--muted) text-[0.875rem] flex flex-wrap justify-between gap-3">
           <p className="m-0">
             Renders made in Blender from the original game meshes. Every model on
             this site also loads live in your browser.

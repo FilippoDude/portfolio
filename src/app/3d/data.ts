@@ -45,7 +45,7 @@ export const models: Model3d[] = [
     renderWidth: 900,
     renderHeight: 900,
     renderNote: CYCLES,
-    tris: 3921,
+    tris: 3969,
     tools: ["Blender", "Substance Painter", "Roblox Studio"],
     store: "169 favorites (UN version)",
   },
@@ -62,9 +62,11 @@ export const models: Model3d[] = [
     renderWidth: 900,
     renderHeight: 900,
     renderNote: CYCLES,
-    tris: 9831,
+    tris: 5213,
     tools: ["Blender", "Substance Painter", "Roblox Studio"],
     store: "17 favorites",
+    // Front three-quarter view, with the front mount on the right
+    rotation: [0, (-3 * Math.PI) / 4, 0],
   },
   {
     slug: "un-cap",
@@ -91,13 +93,13 @@ export const models: Model3d[] = [
     section: "gear",
     kind: "Mask",
     description:
-      "A hazmat visor mask in SCP orange with the Foundation logo on the glass and a metal frame, made for SCP roleplay groups on Roblox.",
+      "A full hazmat hood with an SCP-orange visor, the Foundation logo on the glass and a metal frame, made for SCP roleplay groups on Roblox.",
     file: "/3d/models/hazmat-mask.glb",
     render: "/3d/renders/hazmat-mask.jpg",
     renderWidth: 900,
     renderHeight: 900,
     renderNote: EEVEE,
-    tris: 1568,
+    tris: 2398,
     tools: ["Blender", "Roblox Studio"],
     rotation: [0, Math.PI, 0],
   },
@@ -125,7 +127,7 @@ export const models: Model3d[] = [
     section: "gear",
     kind: "Head accessory",
     description:
-      "Chunky over-ear headphones with orange ear cups and a metal band, built as a Roblox head accessory.",
+      "Chunky over-ear headset with orange ear cups and a boom mic, built as a Roblox head accessory.",
     file: "/3d/models/heavy-headphones.glb",
     render: "/3d/renders/heavy-headphones.jpg",
     renderWidth: 900,
@@ -133,6 +135,7 @@ export const models: Model3d[] = [
     renderNote: EEVEE,
     tris: 3963,
     tools: ["Blender", "Roblox Studio"],
+    rotation: [0, Math.PI, 0],
   },
   {
     slug: "purple-horns",
@@ -167,7 +170,8 @@ export const models: Model3d[] = [
     tris: 194,
     tools: ["Blender", "Photoshop"],
     link: { label: "Widgets Crate app", href: "https://widgetscrate.filippodude.com" },
-    rotation: [0, Math.PI, 0],
+    // Front (lock and widget icons) towards the camera, turned slightly
+    rotation: [0, -Math.PI / 6, 0],
   },
   {
     slug: "laptop",
@@ -182,7 +186,7 @@ export const models: Model3d[] = [
     renderWidth: 900,
     renderHeight: 900,
     renderNote: EEVEE,
-    tris: 14814,
+    tris: 12834,
     tools: ["Blender"],
     link: { label: "See it on the 3D laptop page", href: "/cool" },
     rotation: [0, Math.PI, 0],
@@ -206,3 +210,7 @@ export const models: Model3d[] = [
 ];
 
 export const getModel = (slug: string) => models.find((m) => m.slug == slug);
+
+// Transparent render of the GLB, so the page's own stage colour shows behind it
+export const cutoutOf = (m: Model3d) =>
+  m.file.replace("/models/", "/cutouts/").replace(".glb", ".webp");

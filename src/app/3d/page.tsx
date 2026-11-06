@@ -2,10 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import ModelCard from "./components/model-card";
 import CopyEmail from "./components/copy-email";
-import { models, ROBLOX_STORE } from "./data";
+import { cutoutOf, getModel, models, ROBLOX_STORE } from "./data";
 
 const gear = models.filter((m) => m.section == "gear");
 const other = models.filter((m) => m.section == "other");
+// The three strongest pieces, from the best-selling lines
+const heroModels = ["jmp-plate-carrier", "nox-tactical-helmet", "hazmat-mask"].map(
+  (slug) => getModel(slug)!,
+);
 
 const stats = [
   { value: "28", label: "Published Roblox items" },
@@ -29,7 +33,7 @@ function SectionHead({
   note: string;
 }) {
   return (
-    <div className="mb-5 flex flex-wrap items-baseline justify-between gap-4 border-b border-(--line) pb-2.5">
+    <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-(--line) pb-3">
       <h2 id={id} className="font-display m-0 text-[1.5rem] font-bold uppercase tracking-[0.05em]">
         {title}
       </h2>
@@ -41,18 +45,27 @@ function SectionHead({
 export default function StudioHome() {
   return (
     <>
-      <Image
-        src="/3d/renders/hero.jpg"
-        alt="GOC plate carrier, GOC Tactical Mask 5000 and UN tactical helmet"
-        width={1872}
-        height={624}
-        priority
-        sizes="(max-width: 1180px) 100vw, 1148px"
-        className="block aspect-[3/1] h-auto w-full rounded-md object-cover"
-      />
+      <ul className="stage rounded-theme m-0 grid list-none grid-cols-3 items-center gap-2 px-4 py-6 sm:px-10">
+        {heroModels.map((m, i) => (
+          <li key={m.slug}>
+            <Link href={`/3d/${m.slug}`} aria-label={m.name}>
+              <Image
+                src={cutoutOf(m)}
+                unoptimized
+                alt=""
+                width={900}
+                height={900}
+                priority
+                sizes="(max-width: 1180px) 33vw, 380px"
+                className={`h-auto w-full transition-transform duration-300 ease-(--ease-out) hover:-translate-y-1 motion-reduce:transition-none ${i == 1 ? "scale-110" : ""}`}
+              />
+            </Link>
+          </li>
+        ))}
+      </ul>
 
-      <div className="grid grid-cols-1 items-end gap-8 pt-7 pb-2 md:grid-cols-[1.3fr_1fr]">
-        <h1 className="font-display m-0 text-[clamp(2.1rem,5.4vw,4rem)] leading-none font-bold uppercase text-balance">
+      <div className="grid grid-cols-1 items-start gap-8 pt-10 pb-2 md:grid-cols-[1.3fr_1fr]">
+        <h1 className="font-display m-0 text-[clamp(2.25rem,4.6vw,3.4rem)] leading-[1.05] font-bold uppercase text-balance">
           Game-ready gear, <span className="text-(--accent)">PBR</span> textured
         </h1>
         <div>
@@ -76,7 +89,7 @@ export default function StudioHome() {
 
       <section
         aria-labelledby="commissions"
-        className="my-10 grid grid-cols-1 items-center gap-5 rounded-md border border-l-4 border-(--line) border-l-(--accent) bg-(--panel) px-6 py-5.5 md:grid-cols-[1fr_auto]"
+        className="rounded-theme my-16 grid grid-cols-1 items-center gap-5 border border-l-4 border-(--line) border-l-(--accent) bg-(--panel) px-6 py-5.5 md:grid-cols-[1fr_auto]"
       >
         <div>
           <h2
@@ -92,7 +105,7 @@ export default function StudioHome() {
         </div>
         <ul className="m-0 flex list-none flex-wrap gap-2.5 p-0">
           {offers.map((o) => (
-            <li key={o.label} className="min-w-[118px] rounded border border-(--line) px-3 py-2">
+            <li key={o.label} className="rounded-theme min-w-[118px] border border-(--line) px-3 py-2">
               <span className="block text-[0.74rem] uppercase tracking-[0.08em] text-(--muted)">
                 {o.label}
               </span>
@@ -102,7 +115,7 @@ export default function StudioHome() {
         </ul>
       </section>
 
-      <section aria-labelledby="work" className="my-14 scroll-mt-6">
+      <section aria-labelledby="work" className="my-24 scroll-mt-6">
         <SectionHead
           id="work"
           title="Gear"
@@ -117,7 +130,7 @@ export default function StudioHome() {
         </ul>
       </section>
 
-      <section aria-labelledby="other" className="my-14">
+      <section aria-labelledby="other" className="my-24">
         <SectionHead id="other" title="Props & branding" note="Models made for my own apps and sites." />
         <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4.5 p-0">
           {other.map((m) => (
@@ -130,7 +143,7 @@ export default function StudioHome() {
 
       <section
         aria-labelledby="hire"
-        className="my-14 grid scroll-mt-6 grid-cols-1 gap-8 md:grid-cols-2"
+        className="my-24 grid scroll-mt-6 grid-cols-1 gap-12 md:grid-cols-2"
       >
         <div>
           <h2 className="font-display m-0 mb-2 text-[1.05rem] font-bold uppercase tracking-[0.05em]">

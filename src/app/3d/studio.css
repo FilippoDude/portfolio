@@ -1,27 +1,42 @@
-/* Tokens for the standalone 3D portfolio. Single dark theme on purpose:
-   the renders are lit for a dark backdrop. */
+/* Design tokens for the standalone 3D portfolio: cool paper, Space Grotesk headlines,
+   UN blue accent (the colour of the UN helmet and cap lines). */
 .studio {
-  --bg: #16181d;
-  --panel: #1e2128;
-  --line: #2c303a;
-  --fg: #e9eaee;
-  --muted: #9aa0ad;
-  --accent: #ee7a3a;
-  --accent-ink: #1a0f08;
-  color-scheme: dark;
+  --bg: #eef1f4;
+  --panel: #ffffff;
+  --line: #d4dbe3;
+  --fg: #132031;
+  --muted: #4c5a6b;
+  --accent: #1f5faf;
+  --accent-ink: #ffffff;
+  --stage: radial-gradient(circle at 50% 35%, #ffffff, #dbe2ea 75%);
+  --radius: 14px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-plex-sans), system-ui, sans-serif;
-  font-size: 16px;
+  font-family: var(--font-manrope-sans), system-ui, sans-serif;
+  font-size: 17px;
   line-height: 1.55;
 }
 
+/* Unlayered, so these win over Tailwind's case/tracking utilities on headings */
 .studio .font-display {
-  font-family: var(--font-chakra), "Arial Narrow", system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
+  text-transform: none;
+  letter-spacing: -0.03em;
 }
 
 .studio .font-spec {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-manrope-sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.studio .stage {
+  background: var(--stage);
+}
+
+.studio .rounded-theme {
+  border-radius: var(--radius);
 }
 
 .studio :focus-visible {

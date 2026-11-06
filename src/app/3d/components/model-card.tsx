@@ -1,18 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Model3d } from "../data";
+import { cutoutOf, Model3d } from "../data";
 
 export default function ModelCard({ model }: { model: Model3d }) {
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-md border border-(--line) bg-(--panel) transition-colors hover:border-(--accent)">
-      <figure className="m-0 aspect-square overflow-hidden">
+    <article className="rounded-theme group relative flex w-full flex-col overflow-hidden border border-(--line) bg-(--panel) transition-colors duration-200 hover:border-(--accent)">
+      <figure className="stage m-0 aspect-square overflow-hidden">
         <Image
-          src={model.render}
+          src={cutoutOf(model)}
+          // Served as-is: re-rendered cutouts keep their URL, and the optimizer would keep serving the old one
+          unoptimized
           alt={`${model.name}, ${model.variant}`}
-          width={model.renderWidth}
-          height={model.renderHeight}
+          width={900}
+          height={900}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="h-full w-full object-contain p-4 transition-transform duration-300 ease-(--ease-out) group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       </figure>
       <div className="flex flex-1 flex-col gap-1 px-4 pt-3.5 pb-4">
