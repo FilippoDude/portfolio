@@ -7,14 +7,6 @@ import { projects } from "./data";
 import ProjectPopup from "./components/project-popup";
 import ProjectCard, { EarlierProjectRow } from "./components/project-card";
 import { getRepoPushDates } from "../services/github-service";
-import dynamic from "next/dynamic";
-
-// Client only: the background bails out on the server, which breaks hydration
-const PlanetsBackground = dynamic(
-  () =>
-    import("./components/planets-background").then((m) => m.PlanetsBackground),
-  { ssr: false },
-);
 
 type Filter = "All" | ProjectCategory;
 
@@ -58,10 +50,7 @@ const ProjectsPage = () => {
     project.github ? pushDates[project.github.toLowerCase()] : undefined;
 
   return (
-    <div className="relative min-h-screen max-w-screen overflow-x-hidden bg-[#000000]">
-      <div className="fixed inset-0">
-        <PlanetsBackground />
-      </div>
+    <div className="relative min-h-screen max-w-screen overflow-x-hidden bg-[#0F101B]">
       {focusedProject && (
         <ProjectPopup
           closeProject={() => setFocusedProject(null)}
