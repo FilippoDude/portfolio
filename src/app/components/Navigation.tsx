@@ -3,11 +3,12 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 type NavigationButtonType = { name: string; link: string; customLink: boolean };
 const navigationButtons: NavigationButtonType[] = [
   { name: "Home", link: "/", customLink: false },
   { name: "Projects", link: "/projects", customLink: false },
-  { name: "3D Models", link: "/models", customLink: false },
+  { name: "3D Portfolio", link: "/3d", customLink: false },
   {
     name: "Copypaste",
     link: "https://copypaste.filippodude.com",
@@ -81,6 +82,7 @@ const NavigationMenu = ({
 };
 
 const NavigationButton = () => {
+  const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
   const obscuratorRef = useRef<HTMLDivElement | null>(null);
@@ -155,6 +157,9 @@ const NavigationButton = () => {
   const onClick = () => {
     toggleMenu();
   };
+
+  // The 3D portfolio is a standalone section with its own header
+  if (pathname.startsWith("/3d")) return null;
 
   return (
     <div
